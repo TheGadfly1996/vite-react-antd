@@ -1,8 +1,16 @@
+import { Outlet } from 'react-router-dom'
+
 export default function App() {
 	return (
 		<div>
-			<h1>Counters that update separately</h1>
-			<Button href='/home'>go home</Button>
+			<header>
+				<h1>Header</h1>
+				<Button type='link' href='/home'>
+					go home
+				</Button>
+			</header>
+
+			<Outlet />
 		</div>
 	)
 }

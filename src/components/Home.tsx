@@ -1,3 +1,3 @@
 export default function Home() {
-	return <Button type='primary'>Home Page</Button>
+	return <Button>Home Page</Button>
 }
