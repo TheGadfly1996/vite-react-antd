@@ -9,7 +9,6 @@ export default function App() {
 					go home
 				</Button>
 			</header>
-
 			<Outlet />
 		</div>
 	)
