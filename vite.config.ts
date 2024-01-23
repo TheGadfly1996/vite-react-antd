@@ -11,6 +11,16 @@ const env = loadEnv('', process.cwd())
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	/**
+	 * ! 全局sass变量
+	 */
+	css: {
+		preprocessorOptions: {
+			scss: {
+				// additionalData: `@use "@/styles/variables.scss" as *;`,
+			},
+		},
+	},
 	plugins: [
 		UnoCSS(),
 		react(),
@@ -24,7 +34,7 @@ export default defineConfig({
 			lossy: {
 				quality: 80,
 			},
-			s3: {
+			/* s3: {
 				// baseURL: 'https://dbx1fvnryss68.cloudfront.net',
 				dir: 'test-upload',
 				client: {
@@ -41,7 +51,7 @@ export default defineConfig({
 					Bucket: 'web-stitac',
 					ACL: 'public-read',
 				},
-			},
+			}, */
 			oss: {
 				baseURL: 'https://plugin-js.oss-accelerate.aliyuncs.com',
 				dir: 'test-upload',

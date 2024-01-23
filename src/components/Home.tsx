@@ -1,3 +1,3 @@
 export default function Home() {
-	return <Button>Home Page</Button>
+	return <>Hello world!</>
 }

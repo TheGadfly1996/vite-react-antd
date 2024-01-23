@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { routes } from '@/router/index.tsx'
 
+import './styles/index.scss'
 import 'virtual:uno.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

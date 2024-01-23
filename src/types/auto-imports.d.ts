@@ -7,6 +7,7 @@ export {}
 declare global {
   const Button: typeof import('antd')['Button']
   const Flex: typeof import('antd')['Flex']
+  const Layout: typeof import('antd')['Layout']
   const createRef: typeof import('react')['createRef']
   const forwardRef: typeof import('react')['forwardRef']
   const lazy: typeof import('react')['lazy']

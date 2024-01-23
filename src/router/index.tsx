@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router-dom'
 import Home from '@/components/Home.tsx'
 import App from '../App.tsx'
 import ErrorPage from '../views/ErrorPage.tsx'
+import Unocss from '../views/unocss/index.tsx'
+import Zustand from '../views/zustand/index.tsx'
 
 export const routes = createBrowserRouter([
 	{
@@ -13,10 +15,14 @@ export const routes = createBrowserRouter([
 				path: '/home',
 				element: <Home />,
 			},
-			{
-				path: '/about',
-				element: <Home />,
-			},
 		],
+	},
+	{
+		path: '/unocss',
+		element: <Unocss />,
+	},
+	{
+		path: '/zustand',
+		element: <Zustand />,
 	},
 ])
