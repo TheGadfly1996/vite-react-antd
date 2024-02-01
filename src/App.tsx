@@ -1,13 +1,22 @@
-import { Outlet } from 'react-router-dom'
-export default function App() {
-	return (
-		<div className='flex h-100% flex-col'>
-			<header>Header</header>
+import { Outlet, useNavigate } from 'react-router-dom'
+import Spin from '@/components/Spin'
 
-			<main className='flex-1'>
-				<Outlet />
-			</main>
-			<footer>Footer</footer>
-		</div>
+export default function App() {
+	const navigate = useNavigate()
+	useEffect(() => {
+		if (window.location.pathname === '/') navigate('/home')
+	}, [navigate])
+
+	return (
+		<>
+			<Spin />
+			<div className='flex h-100% flex-col'>
+				<header>Header</header>
+				<main className='flex-1'>
+					<Outlet />
+				</main>
+				<footer>Footer</footer>
+			</div>
+		</>
 	)
 }

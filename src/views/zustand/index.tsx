@@ -1,26 +1,19 @@
-import { create } from 'zustand'
+import { getBanner } from '@/axios/api/home'
 
-const useStore = create((set) => ({
-	bears: 0,
-	increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
-	removeAllBears: () => set({ bears: 0 }),
-}))
-
-const BearCounter = () => {
-	const bears = useStore((state) => state.bears)
-	return <h1>{bears} around here...</h1>
-}
-
-const Controls = () => {
-	const increasePopulation = useStore((state) => state.increasePopulation)
-	return <button onClick={increasePopulation}>one up</button>
+const Banner = () => {
+	const GetBanner = async () => {
+		getBanner().then((res) => {
+			console.log(res)
+		})
+	}
+	return <Button onClick={GetBanner}>Get Banner</Button>
 }
 
 export default function Zustand() {
 	return (
 		<div>
-			<BearCounter />
-			<Controls />
+			<Button href='/home'>home</Button>
+			<Banner />
 		</div>
 	)
 }
