@@ -11,7 +11,7 @@ export default function App() {
 		<>
 			<Spin />
 			<div className='flex h-100% flex-col'>
-				<header>Header</header>
+				<header className='line-height-60 h-60 text-center'>Header</header>
 				<main className='flex-1'>
 					<Outlet />
 				</main>

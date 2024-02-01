@@ -2,9 +2,7 @@ import { getBanner } from '@/axios/api/home'
 
 const Banner = () => {
 	const GetBanner = async () => {
-		getBanner().then((res) => {
-			console.log(res)
-		})
+		await getBanner()
 	}
 	return <Button onClick={GetBanner}>Get Banner</Button>
 }
