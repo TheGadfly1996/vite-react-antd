@@ -4,7 +4,8 @@ import App from '../App.tsx'
 import ErrorPage from '../views/ErrorPage.tsx'
 import Unocss from '../views/unocss/index.tsx'
 import Zustand from '../views/zustand/index.tsx'
-import Parent from '../views/props/parent.tsx'
+import Parent from '../views/props/Parent.tsx'
+import TicTacToe from '@/views/Tic-Tac-Toe/Board.tsx'
 
 export const routes = createBrowserRouter([
 	{
@@ -31,6 +32,10 @@ export const routes = createBrowserRouter([
 			{
 				path: '/props',
 				element: <Parent />,
+			},
+			{
+				path: '/Tic-Tac-Toe',
+				element: <TicTacToe />,
 			},
 		],
 	},

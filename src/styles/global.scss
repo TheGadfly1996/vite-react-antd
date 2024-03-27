@@ -23,7 +23,9 @@
 		min-width: 320px;
 	}
 }
-
+* {
+	box-sizing: border-box;
+}
 html,
 body,
 #root {

@@ -1,0 +1,17 @@
+.app-container {
+	.board-row:not(:last-child) {
+		.square {
+			border-bottom: none;
+		}
+	}
+	.board-row {
+		--uno: h-34 flex;
+		.square {
+			border: 1px solid #999;
+			--uno: w-34 h-34 font-700 bg-#fff text-24 line-height-34 p-0 text-center;
+		}
+		.square:not(:last-child) {
+			border-right: none;
+		}
+	}
+}

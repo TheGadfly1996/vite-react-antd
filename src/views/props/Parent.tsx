@@ -1,4 +1,4 @@
-import { MyButton } from './children.tsx'
+import { MyButton } from './Children.tsx'
 
 export default function MyParent() {
 	const [count, setCount] = useState(0)

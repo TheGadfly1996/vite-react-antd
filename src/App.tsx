@@ -6,12 +6,14 @@ export default function App() {
 	useEffect(() => {
 		if (window.location.pathname === '/') navigate('/home')
 	}, [navigate])
-
 	return (
 		<>
 			<Spin />
 			<div className='flex h-100% flex-col'>
-				<header className='line-height-60 h-60 text-center'>Header</header>
+				<header className='line-height-60 h-60 flex-sb-c'>
+					<div className='i-mdi-home cursor-pointer' onClick={() => navigate('/home')}></div>
+					<span className='m-auto'>Header</span>
+				</header>
 				<main className='flex-1'>
 					<Outlet />
 				</main>

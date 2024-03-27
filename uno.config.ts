@@ -11,7 +11,7 @@ const unocssConfig: UserConfig = defineConfig({
 		presetAttributify(),
 		presetRemToPx({ baseFontSize: 4 }),
 		presetIcons({
-			extraProperties: { display: 'inline-block', 'vertical-align': 'middle' },
+			extraProperties: { display: 'inline-block', 'vertical-align': 'middle', 'font-size': '20px' },
 		}),
 	],
 	transformers: [transformerDirectives(), transformerAttributifyJsx()],
