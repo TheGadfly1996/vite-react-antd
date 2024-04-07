@@ -1,6 +1,6 @@
 import { notification } from 'antd'
 // import { showLoginDialog } from '@/hooks/useLoginDialog'
-import { useSpinStore } from '@/store/spin'
+import { useGlobalStore } from '@/store/global'
 import type { AxiosRequestHeaders } from 'axios'
 import axios from 'axios'
 
@@ -52,7 +52,7 @@ function useAxios(config: UseAxiosConfig = {}) {
 	axiosInstance.interceptors.request.use(
 		(requestConfig) => {
 			requestConfig.isShowLoading = requestConfig.isShowLoading ?? true
-			if (requestConfig.isShowLoading) useSpinStore.getState().changeLoadingStatus(true)
+			if (requestConfig.isShowLoading) useGlobalStore.getState().changeLoadingStatus(true)
 			requestConfig.headers['Accept-Language'] = 'en'
 			// ! 调整参数位置
 			if (requestConfig.payload) {
@@ -66,7 +66,7 @@ function useAxios(config: UseAxiosConfig = {}) {
 		},
 		(error) => {
 			setTimeout(() => {
-				useSpinStore.getState().changeLoadingStatus(false)
+				useGlobalStore.getState().changeLoadingStatus(false)
 			}, 500)
 
 			return Promise.reject(error)
@@ -76,7 +76,7 @@ function useAxios(config: UseAxiosConfig = {}) {
 	axiosInstance.interceptors.response.use(
 		(response) => {
 			setTimeout(() => {
-				useSpinStore.getState().changeLoadingStatus(false)
+				useGlobalStore.getState().changeLoadingStatus(false)
 			}, 500)
 			const { data } = response
 			if (data.code !== 2000 && !response.config.isInterceptError) {
@@ -87,7 +87,7 @@ function useAxios(config: UseAxiosConfig = {}) {
 		},
 		(error) => {
 			setTimeout(() => {
-				useSpinStore.getState().changeLoadingStatus(false)
+				useGlobalStore.getState().changeLoadingStatus(false)
 			}, 500)
 
 			/**

@@ -6,11 +6,16 @@ import Unocss from '../views/unocss/index.tsx'
 import Zustand from '../views/zustand/index.tsx'
 import Parent from '../views/props/Parent.tsx'
 import TicTacToe from '@/views/Tic-Tac-Toe/Board.tsx'
+import Login from '@/views/Login.tsx'
 
 export const routes = createBrowserRouter([
 	{
 		path: '*',
 		element: <Navigate to={'/'} replace />,
+	},
+	{
+		path: '/login',
+		element: <Login />,
 	},
 	{
 		path: '/',

@@ -1,4 +1,5 @@
 import { defineConfig, presetAttributify, presetIcons, presetUno, transformerAttributifyJsx } from 'unocss'
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import presetRemToPx from '@unocss/preset-rem-to-px'
 import transformerDirectives from '@unocss/transformer-directives'
 import type { UserConfig } from 'unocss'
@@ -11,7 +12,10 @@ const unocssConfig: UserConfig = defineConfig({
 		presetAttributify(),
 		presetRemToPx({ baseFontSize: 4 }),
 		presetIcons({
-			extraProperties: { display: 'inline-block', 'vertical-align': 'middle', 'font-size': '20px' },
+			collections: {
+				ls: FileSystemIconLoader('./src/assets/svg', (svg) => svg.replace(/#fff/, 'currentColor')),
+			},
+			extraProperties: { display: 'inline-block', 'vertical-align': 'middle', 'font-size': '16px' },
 		}),
 	],
 	transformers: [transformerDirectives(), transformerAttributifyJsx()],

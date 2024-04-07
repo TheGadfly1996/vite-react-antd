@@ -6,13 +6,16 @@
 export {}
 declare global {
   const Button: typeof import('antd')['Button']
+  const ConfigProvider: typeof import('antd')['ConfigProvider']
   const Flex: typeof import('antd')['Flex']
   const Layout: typeof import('antd')['Layout']
+  const Switch: typeof import('antd')['Switch']
   const createRef: typeof import('react')['createRef']
   const forwardRef: typeof import('react')['forwardRef']
   const lazy: typeof import('react')['lazy']
   const memo: typeof import('react')['memo']
   const startTransition: typeof import('react')['startTransition']
+  const theme: typeof import('antd')['theme']
   const useCallback: typeof import('react')['useCallback']
   const useContext: typeof import('react')['useContext']
   const useDebugValue: typeof import('react')['useDebugValue']

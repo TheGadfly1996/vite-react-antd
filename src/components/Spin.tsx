@@ -1,8 +1,8 @@
-import { useSpinStore } from '@/store/spin'
+import { useGlobalStore } from '@/store/global'
 import { Spin } from 'antd'
 
 const CustomSpin: React.FC = () => {
-	const isShowLoading = useSpinStore((state) => state.isShowLoading)
+	const isShowLoading = useGlobalStore((state) => state.isShowLoading)
 
 	return (
 		<>

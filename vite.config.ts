@@ -73,18 +73,9 @@ export default defineConfig({
 				chunkFileNames: 'static/js/[name]-[hash].js',
 				entryFileNames: 'static/js/[name]-[hash].js',
 				assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
-				manualChunks(id, { getModuleInfo }) {
-					// if (id.includes('ant-design')) return `ant-design`
-					// if (id.includes('react')) return `react`
-
-					// 	公共组件
-					if (id.includes('src/components')) {
-						const module = getModuleInfo(id)
-						if (module) {
-							const importersLen = module.importers.length + module.dynamicImporters.length
-							if (importersLen > 1) return `components/${id.split('components/')[1].split('.')}`
-						}
-					}
+				manualChunks: {
+					react: ['react', 'react-dom', 'react-router-dom'],
+					antd: ['antd'],
 				},
 			},
 		},
