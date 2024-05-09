@@ -12,26 +12,25 @@ export default function App() {
 
 	// theme
 	const { siteTheme, changeSiteTheme } = useGlobalStore()
+	const { colorPrimary } = antdTheme.useToken().token
 
 	return (
-		<ConfigProvider
-			theme={{
-				algorithm: siteTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
-			}}
-		>
-			<Spin />
+		<ConfigProvider theme={{ token: { colorPrimary: siteTheme || colorPrimary } }}>
+			<ColorPicker showText onChangeComplete={(color) => changeSiteTheme(color.toHexString())} />
 
-			<Switch onChange={(checked) => changeSiteTheme(checked ? 'dark' : 'light')} checkedChildren={<div className='i-ls-sun'></div>} unCheckedChildren={<div className='i-ls-moon'></div>} defaultChecked />
+			<div className='app min-h-100vh' style={{ color: siteTheme }}>
+				<Spin />
 
-			<div className='flex h-100% flex-col'>
-				<header className='line-height-60 h-60 flex-sb-c'>
-					<div className='i-mdi-home cursor-pointer' onClick={() => navigate('/home')}></div>
-					<span className='m-auto'>Header</span>
-				</header>
-				<main className='flex-1'>
-					<Outlet />
-				</main>
-				<footer>Footer</footer>
+				<div className='flex h-100% flex-col'>
+					<header className='line-height-60 h-60 flex-sb-c'>
+						<div className='i-mdi-home cursor-pointer' onClick={() => navigate('/home')}></div>
+						<span className='m-auto'>Header</span>
+					</header>
+					<main className='flex-1'>
+						<Outlet />
+					</main>
+					<footer>Footer</footer>
+				</div>
 			</div>
 		</ConfigProvider>
 	)

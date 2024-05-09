@@ -13,7 +13,7 @@ const unocssConfig: UserConfig = defineConfig({
 		presetRemToPx({ baseFontSize: 4 }),
 		presetIcons({
 			collections: {
-				ls: FileSystemIconLoader('./src/assets/svg', (svg) => svg.replace(/#fff/, 'currentColor')),
+				custom: FileSystemIconLoader('./src/assets/svg', (svg) => svg.replace(/#fff/, 'currentColor')),
 			},
 			extraProperties: { display: 'inline-block', 'vertical-align': 'middle', 'font-size': '16px' },
 		}),

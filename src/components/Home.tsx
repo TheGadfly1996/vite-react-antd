@@ -3,7 +3,6 @@ export default function Home() {
 		{
 			title: 'unocss',
 			href: '/unocss',
-			color: 'text-black',
 		},
 		{
 			title: 'zustand',

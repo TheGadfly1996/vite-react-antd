@@ -2,13 +2,11 @@ import { create } from 'zustand'
 import createSelectors from './selectors'
 import { persist } from 'zustand/middleware'
 
-export type ThemeType = 'dark' | 'light' | null
-
 interface SpinState {
-	siteTheme: ThemeType
+	siteTheme: string
 	isShowLoading: boolean
 	changeLoadingStatus: (by: boolean) => void
-	changeSiteTheme: (by: ThemeType) => void
+	changeSiteTheme: (by: string) => void
 }
 
 export const useGlobalStore = createSelectors(
@@ -18,13 +16,13 @@ export const useGlobalStore = createSelectors(
 				isShowLoading: false,
 				changeLoadingStatus: (isShowLoading) => set(() => ({ isShowLoading })),
 
-				siteTheme: 'light',
+				siteTheme: '',
 				changeSiteTheme: (siteTheme) => set(() => ({ siteTheme })),
 			}),
 			{
 				name: 'global-storage',
 				partialize: (state) => ({
-					globalTheme: state.siteTheme,
+					siteTheme: state.siteTheme,
 				}),
 			},
 		),

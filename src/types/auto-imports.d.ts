@@ -6,6 +6,7 @@
 export {}
 declare global {
   const Button: typeof import('antd')['Button']
+  const ColorPicker: typeof import('antd')['ColorPicker']
   const ConfigProvider: typeof import('antd')['ConfigProvider']
   const Flex: typeof import('antd')['Flex']
   const Layout: typeof import('antd')['Layout']
