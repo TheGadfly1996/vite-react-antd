@@ -5,8 +5,10 @@ import { persist } from 'zustand/middleware'
 interface SpinState {
 	siteTheme: string
 	isShowLoading: boolean
+	siteLanguage: languageType
 	changeLoadingStatus: (by: boolean) => void
 	changeSiteTheme: (by: string) => void
+	changeLanguage: (by: languageType) => void
 }
 
 export const useGlobalStore = createSelectors(
@@ -18,6 +20,9 @@ export const useGlobalStore = createSelectors(
 
 				siteTheme: '',
 				changeSiteTheme: (siteTheme) => set(() => ({ siteTheme })),
+
+				siteLanguage: 'en-US',
+				changeLanguage: (siteLanguage) => set(() => ({ siteLanguage })),
 			}),
 			{
 				name: 'global-storage',
