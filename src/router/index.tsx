@@ -1,14 +1,15 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { createBrowserRouter, RouteObject, Navigate, RouterProvider } from 'react-router-dom'
 import Home from '@/components/Home.tsx'
 import App from '../App.tsx'
 import ErrorPage from '../views/ErrorPage.tsx'
-import Unocss from '../views/unocss/index.tsx'
-import Zustand from '../views/zustand/index.tsx'
-import Parent from '../views/props/Parent.tsx'
-import TicTacToe from '@/views/Tic-Tac-Toe/Board.tsx'
-import Login from '@/views/Login.tsx'
 
-export const routes = createBrowserRouter([
+const Unocss = lazy(() => import('../views/unocss/index.tsx'))
+const Zustand = lazy(() => import('../views/zustand/index.tsx'))
+const Parent = lazy(() => import('../views/props/Parent.tsx'))
+const TicTacToe = lazy(() => import('@/views/Tic-Tac-Toe/Board.tsx'))
+const Login = lazy(() => import('@/views/Login.tsx'))
+
+const routes: RouteObject[] = [
 	{
 		path: '*',
 		element: <Navigate to={'/'} replace />,
@@ -44,4 +45,10 @@ export const routes = createBrowserRouter([
 			},
 		],
 	},
-])
+]
+
+const router = createBrowserRouter(routes)
+
+export const Routes: React.FC = () => {
+	return <RouterProvider router={router} />
+}
