@@ -2,6 +2,7 @@ import { createBrowserRouter, RouteObject, Navigate, RouterProvider } from 'reac
 import Home from '@/components/Home.tsx'
 import App from '../App.tsx'
 import ErrorPage from '../views/ErrorPage.tsx'
+import { Layout } from '@/views/Layout/index.tsx'
 
 const Unocss = lazy(() => import('../views/unocss/index.tsx'))
 const Zustand = lazy(() => import('../views/zustand/index.tsx'))
@@ -20,7 +21,7 @@ const routes: RouteObject[] = [
 	},
 	{
 		path: '/',
-		element: <App />,
+		element: <Layout />,
 		errorElement: <ErrorPage />,
 		children: [
 			{
@@ -36,11 +37,11 @@ const routes: RouteObject[] = [
 				element: <Zustand />,
 			},
 			{
-				path: '/props',
+				path: '/hooks-test',
 				element: <Parent />,
 			},
 			{
-				path: '/Tic-Tac-Toe',
+				path: '/TicTacToe',
 				element: <TicTacToe />,
 			},
 		],
