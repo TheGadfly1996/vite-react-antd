@@ -8,19 +8,8 @@ import { defaultProps } from './props'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 
 export const Layout = () => {
-	const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({
-		fixSiderbar: true,
-		layout: 'mix',
-		splitMenus: false,
-		menu: {
-			type: 'sub',
-			collapsedShowTitle: false,
-			defaultOpenAll: true,
-			ignoreFlatMenu: true,
-			hideMenuWhenCollapsed: true,
-			autoClose: false,
-		},
-	})
+	const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({})
+
 	const location = useLocation()
 	const [pathname, setPathname] = useState(location.pathname)
 
@@ -42,9 +31,15 @@ export const Layout = () => {
 					}}
 				>
 					<ProLayout
-						prefixCls='my-prefix'
+						layout='mix'
 						{...defaultProps}
+						{...settings}
+						menu={{
+							defaultOpenAll: true,
+							ignoreFlatMenu: true,
+						}}
 						locale='zh-CN'
+						prefixCls='my-prefix'
 						location={{
 							pathname,
 						}}
@@ -126,7 +121,6 @@ export const Layout = () => {
 							}
 							return defaultDom
 						}}
-						{...settings}
 					>
 						<PageContainer
 							token={{

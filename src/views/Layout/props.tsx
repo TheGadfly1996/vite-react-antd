@@ -15,7 +15,7 @@ export const defaultProps: MenuDataItem = {
 				path: '/admin',
 				name: 'Profile',
 				icon: <div className='i-ant-design:profile-outlined'></div>,
-				key: 'Profile',
+				// key: 'Profile',
 				routes: [
 					{
 						path: '/unocss',
@@ -45,8 +45,5 @@ export const defaultProps: MenuDataItem = {
 		pathname: '/',
 	},
 	locale: 'zh-CN',
-	menuProps: {
-		openKeys: ['Profile'],
-	},
 	defaultCollapsed: false,
 }

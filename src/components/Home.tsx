@@ -10,14 +10,19 @@ export default function Home() {
 			color: 'text-red',
 		},
 		{
-			title: 'props',
-			href: '/props',
+			title: 'hooks-test',
+			href: '/hooks-test',
 			color: 'text-cyan',
 		},
 		{
-			title: 'Tic-Tac-Toe',
-			href: '/Tic-Tac-Toe',
+			title: 'TicTacToe',
+			href: '/TicTacToe',
 			color: 'text-green',
+		},
+		{
+			title: 'alipay',
+			href: '/alipay',
+			color: 'text-fuchsia',
 		},
 	]
 	const listItem = navList.map((item) => (
