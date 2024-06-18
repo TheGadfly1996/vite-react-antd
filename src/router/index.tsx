@@ -9,6 +9,7 @@ const Zustand = lazy(() => import('../views/zustand/index.tsx'))
 const Parent = lazy(() => import('../views/props/Parent.tsx'))
 const TicTacToe = lazy(() => import('@/views/Tic-Tac-Toe/Board.tsx'))
 const Login = lazy(() => import('@/views/Login.tsx'))
+const Alipay = lazy(() => import('@/views/Alipay/index.tsx'))
 
 const routes: RouteObject[] = [
 	{
@@ -43,6 +44,10 @@ const routes: RouteObject[] = [
 			{
 				path: '/TicTacToe',
 				element: <TicTacToe />,
+			},
+			{
+				path: '/alipay',
+				element: <Alipay />,
 			},
 		],
 	},

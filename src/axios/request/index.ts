@@ -44,7 +44,7 @@ function useAxios(config: UseAxiosConfig = {}) {
 			'Content-Type': 'application/json',
 			...config.headers,
 		},
-		baseURL: 'https://test-robosenmall.robosen.cn',
+		baseURL: import.meta.env.VITE_APP_API_URL,
 		timeout: 1000 * 30,
 	})
 

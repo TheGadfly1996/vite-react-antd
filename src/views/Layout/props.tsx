@@ -8,13 +8,13 @@ export const defaultProps: MenuDataItem = {
 			{
 				path: '/home',
 				name: 'Home',
-				icon: <div class='i-ant-design:home-outlined'></div>,
+				icon: <div className='i-ant-design:home-outlined'></div>,
 			},
 
 			{
 				path: '/admin',
 				name: 'Profile',
-				icon: <div class='i-ant-design:profile-outlined'></div>,
+				icon: <div className='i-ant-design:profile-outlined'></div>,
 				key: 'Profile',
 				routes: [
 					{
@@ -32,6 +32,10 @@ export const defaultProps: MenuDataItem = {
 					{
 						path: '/zustand',
 						name: 'zustand',
+					},
+					{
+						path: '/alipay',
+						name: 'alipay',
 					},
 				],
 			},

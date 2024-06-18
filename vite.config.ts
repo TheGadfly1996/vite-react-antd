@@ -33,24 +33,6 @@ export default defineConfig({
 			lossy: {
 				quality: 80,
 			},
-			/* s3: {
-				// baseURL: 'https://dbx1fvnryss68.cloudfront.net',
-				dir: 'test-upload',
-				client: {
-					region: 'us-west-2',
-					credentials: {
-						accessKeyId: env.VITE_AWS_KEY,
-						secretAccessKey: env.VITE_AWS_PASSWORD,
-					},
-				},
-				head: {
-					Bucket: 'web-stitac',
-				},
-				put: {
-					Bucket: 'web-stitac',
-					ACL: 'public-read',
-				},
-			}, */
 			oss: {
 				baseURL: 'https://plugin-js.oss-accelerate.aliyuncs.com',
 				dir: 'test-upload',
@@ -95,10 +77,10 @@ export default defineConfig({
 		host: '0.0.0.0',
 		open: true,
 		proxy: {
-			'/usapi': {
-				target: 'https://en-robosenmall.robosen.cn/',
+			'/api': {
+				target: 'http://43.143.234.128:8000',
 				changeOrigin: true,
-				rewrite: (servePath) => servePath.replace(/^\/usapi/, ''),
+				rewrite: (servePath) => servePath.replace(/^\/api/, ''),
 			},
 		},
 	},
