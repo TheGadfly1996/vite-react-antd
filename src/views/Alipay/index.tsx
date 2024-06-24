@@ -1,18 +1,18 @@
-import { getUser } from '@/axios/api/home/index'
+import { createOrder } from '@/axios/api/home/index'
 
 export default function () {
-	const [user, setUser] = useState(null)
-	useEffect(() => {
-		const fetchUser = async () => {
-			try {
-				const userData = await getUser({ name: 'jon', description: 'sss' })
-				setUser(userData)
-			} catch (err) {
-				console.log(err)
-			}
-		}
+	const handleCreate = async () => {
+		try {
+			const { data } = await createOrder()
+			console.log(data)
 
-		fetchUser()
-	}, [])
-	return <div>{user}</div>
+			window.location.href = data
+		} catch (err) {
+			console.log(err)
+		}
+	}
+	// useEffect(() => {
+	// 	handleCreate()
+	// }, [])
+	return <Button onClick={handleCreate}>发起支付请求</Button>
 }

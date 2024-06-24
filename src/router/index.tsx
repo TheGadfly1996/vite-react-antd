@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouteObject, Navigate, RouterProvider } from 'react-router-dom'
 import Home from '@/components/Home.tsx'
-import App from '../App.tsx'
 import ErrorPage from '../views/ErrorPage.tsx'
 import { Layout } from '@/views/Layout/index.tsx'
 

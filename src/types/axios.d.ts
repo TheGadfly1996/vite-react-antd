@@ -8,8 +8,3 @@ declare module 'axios' {
 		payload?: any
 	}
 }
-declare interface AxiosResponseType<T = any> {
-	code: number
-	data: T
-	msg?: string
-}
