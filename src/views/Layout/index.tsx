@@ -4,13 +4,28 @@ import Spin from '@/components/Spin'
 import LanguageMenu from './LanguageMenu'
 
 import { Suspense, useState } from 'react'
-import { defaultProps } from './props'
-import { Outlet, Link, useLocation } from 'react-router-dom'
+import { routes } from './props'
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
+
+const waitTime = (time: number = 100) => {
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			resolve(true)
+		}, time)
+	})
+}
 
 export const Layout = () => {
 	const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({})
 
+	// 重定向
 	const location = useLocation()
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (window.location.pathname === '/') navigate('/home')
+	}, [navigate])
+
 	const [pathname, setPathname] = useState(location.pathname)
 
 	if (typeof document === 'undefined') {
@@ -32,17 +47,17 @@ export const Layout = () => {
 				>
 					<ProLayout
 						layout='mix'
-						{...defaultProps}
 						{...settings}
 						menu={{
 							defaultOpenAll: true,
 							ignoreFlatMenu: true,
+							request: async () => {
+								await waitTime(2000)
+								return routes
+							},
 						}}
 						locale='zh-CN'
 						prefixCls='my-prefix'
-						location={{
-							pathname,
-						}}
 						token={{
 							sider: {},
 						}}
