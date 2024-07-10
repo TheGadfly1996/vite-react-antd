@@ -11,6 +11,7 @@ declare global {
   const Divider: typeof import('antd')['Divider']
   const Dropdown: typeof import('antd')['Dropdown']
   const Flex: typeof import('antd')['Flex']
+  const Image: typeof import('antd')['Image']
   const Input: typeof import('antd')['Input']
   const Layout: typeof import('antd')['Layout']
   const Link: typeof import('react-router-dom')['Link']

@@ -3,7 +3,6 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Home from '@/components/Home.tsx'
 import ErrorPage from '../views/ErrorPage.tsx'
 import { Layout } from '@/views/Layout/index.tsx'
-
 import type { RouteObject } from 'react-router-dom'
 
 type CustomRouteObject = RouteObject & {

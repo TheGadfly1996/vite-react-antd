@@ -10,7 +10,7 @@ const Banner = () => {
 export default function Zustand() {
 	return (
 		<div>
-			<Button href='/home'>home</Button>
+			<Button href='/home'>home12311111</Button>
 			<Banner />
 		</div>
 	)

@@ -14,6 +14,9 @@ importers:
       '@ant-design/pro-components':
         specifier: ^2.7.1
         version: 2.7.1(antd@5.12.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(rc-field-form@1.41.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@types/shopify-buy':
+        specifier: ^2.17.4
+        version: 2.17.4
       antd:
         specifier: ^5.12.8
         version: 5.12.8(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -44,6 +47,9 @@ importers:
       react-router-dom:
         specifier: ^6.21.1
         version: 6.21.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      shopify-buy:
+        specifier: ^2.22.0
+        version: 2.22.0
       zustand:
         specifier: ^4.5.0
         version: 4.5.0(@types/react@18.2.47)(react@18.2.0)
@@ -1246,6 +1252,9 @@ packages:
 
   '@types/semver@7.5.6':
     resolution: {integrity: sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==}
+
+  '@types/shopify-buy@2.17.4':
+    resolution: {integrity: sha512-svTrPgQJaKcKv0yGAdQAsgHR8JF8qSWPQThPU+cawSq2+2Wj/ZD8AVXn3FenXwEVfhqGcRhZOKJJfSd7+gipYg==}
 
   '@typescript-eslint/eslint-plugin@6.18.1':
     resolution: {integrity: sha512-nISDRYnnIpk7VCFrGcu1rnZfM1Dh9LRHnfgdkjcbi/l7g16VYRri3TjXi9Ir4lOZSw5N/gnV/3H7jIPQ8Q4daA==}
@@ -3898,6 +3907,9 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
+  shopify-buy@2.22.0:
+    resolution: {integrity: sha512-Y7FXmgX+By5VjF449oGj6+f8wBEKSupeAS/7bz9MXnvFmhT4C3ka/mzTjVDZTmq0arJdx3EyxUgpaWez3ztoKg==}
+
   side-channel@1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
 
@@ -6315,6 +6327,8 @@ snapshots:
   '@types/scheduler@0.16.8': {}
 
   '@types/semver@7.5.6': {}
+
+  '@types/shopify-buy@2.17.4': {}
 
   '@typescript-eslint/eslint-plugin@6.18.1(@typescript-eslint/parser@6.18.1(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3)':
     dependencies:
@@ -9371,6 +9385,8 @@ snapshots:
   shebang-regex@1.0.0: {}
 
   shebang-regex@3.0.0: {}
+
+  shopify-buy@2.22.0: {}
 
   side-channel@1.0.4:
     dependencies:

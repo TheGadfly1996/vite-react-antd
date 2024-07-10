@@ -1,7 +1,8 @@
 import { createOrder } from '@/axios/api/home/index'
+import { Products } from './Products'
 
-export default function () {
-	const handleCreate = async () => {
+export default function Alipay() {
+	const handleAlipay = async () => {
 		try {
 			const { data } = await createOrder()
 			console.log(data)
@@ -11,8 +12,11 @@ export default function () {
 			console.log(err)
 		}
 	}
-	// useEffect(() => {
-	// 	handleCreate()
-	// }, [])
-	return <Button onClick={handleCreate}>发起支付请求</Button>
+
+	return (
+		<>
+			<Button onClick={handleAlipay}>发起阿里支付请求</Button>
+			<Products />
+		</>
+	)
 }
