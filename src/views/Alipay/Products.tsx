@@ -2,20 +2,24 @@ import { Image } from 'antd'
 import { useShopify } from './hooks/useShopify'
 
 export const Products = () => {
-	const { products, fetchProducts, addVariantToCart, updateQuantityInCart, createCheckout, checkoutStatus } = useShopify()
-	const [currentId, setCurrentId] = useState<string | null>()
+	const { products, fetchProducts, addVariantToCart, createCheckout, checkoutStatus } = useShopify()
 
-	const handleCheckout = (id: string) => {
-		createCheckout()
-		setCurrentId(id)
-		console.log(currentId)
-	}
-	const test = () => {
-		console.log(currentId)
+	useEffect(() => {
+		fetchProducts()
+	}, [])
+
+	const handleCheckout = async (id: string) => {
+		const newCheckout = await createCheckout()
+		await addVariantToCart(newCheckout.id, [
+			{
+				variantId: id,
+				quantity: 1,
+			},
+		])
+		window.open(newCheckout.webUrl)
 	}
 	return (
 		<>
-			<Button onClick={fetchProducts}>获取所有商品</Button>
 			<div className='Product-wrapper'>
 				<ul className='flex gap-60 mt-40 flex-wrap'>
 					{products &&
@@ -29,10 +33,11 @@ export const Products = () => {
 										<h4>{product.title}</h4>
 										<h5>${product.variants[0].price.amount}</h5>
 									</div>
-									<Button type='primary' className='mt-40 w-fit' onClick={() => handleCheckout(product.variants[i].id)}>
+									{/* {product.variants[i].id} */}
+									<Button type='primary' className='mt-40 w-fit' onClick={() => handleCheckout(product.variants[0].id)}>
 										add to cart
 									</Button>
-									<button onClick={test}> test</button>
+									<h2>{checkoutStatus?.id}</h2>
 								</li>
 							)
 						})}

@@ -30,9 +30,9 @@ export function useShopify() {
 
 	const createCheckout = async () => {
 		const newCheckout = await client.checkout.create()
-		console.log(newCheckout)
-
+		console.log(newCheckout.id)
 		setCheckoutStatus(newCheckout)
+		return newCheckout
 	}
 
 	const createShop = async () => {
@@ -42,6 +42,8 @@ export function useShopify() {
 
 	const addVariantToCart = async (checkoutId: string, lineItemsToAdd: CheckoutLineItemInput[]) => {
 		const response = await client.checkout.addLineItems(checkoutId, lineItemsToAdd)
+		console.log(response.id)
+
 		setCheckoutStatus(response)
 		return response
 	}
