@@ -35,9 +35,8 @@ export const Products = () => {
 									</div>
 									{/* {product.variants[i].id} */}
 									<Button type='primary' className='mt-40 w-fit' onClick={() => handleCheckout(product.variants[0].id)}>
-										add to cart
+										购买
 									</Button>
-									<h2>{checkoutStatus?.id}</h2>
 								</li>
 							)
 						})}

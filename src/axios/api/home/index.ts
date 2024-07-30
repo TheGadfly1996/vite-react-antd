@@ -2,11 +2,10 @@ import useAxios from '@/axios/request/index'
 
 const { request } = useAxios()
 
-export function getUser(payload: { name: string; description: string }) {
+export function getMenus() {
 	return request({
-		url: '/getUser',
-		method: 'POST',
-		payload,
+		url: '/menus',
+		method: 'GET',
 	})
 }
 export function createOrder() {

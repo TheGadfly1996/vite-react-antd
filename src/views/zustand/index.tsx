@@ -1,8 +1,8 @@
-import { getUser } from '@/axios/api/home'
+import { getMenus } from '@/axios/api/home'
 
 const Banner = () => {
 	const GetBanner = async () => {
-		await getUser()
+		await getMenus()
 	}
 	return <Button onClick={GetBanner}>Get Banner</Button>
 }

@@ -1,19 +1,13 @@
 import type { ProSettings, MenuDataItem } from '@ant-design/pro-components'
+
+import { Suspense, useState } from 'react'
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
 import { PageContainer, ProCard, ProConfigProvider, ProLayout, SettingDrawer } from '@ant-design/pro-components'
+
 import Spin from '@/components/Spin'
 import LanguageMenu from './LanguageMenu'
 
-import { Suspense, useState } from 'react'
-import { routes } from './props'
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
-
-const waitTime = (time: number = 100) => {
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			resolve(true)
-		}, time)
-	})
-}
+import { getMenus } from '@/axios/api/menu'
 
 export const Layout = () => {
 	const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({})
@@ -21,12 +15,23 @@ export const Layout = () => {
 	// 重定向
 	const location = useLocation()
 	const navigate = useNavigate()
+	const [pathname, setPathname] = useState(location.pathname)
+
+	// 获取菜单数据
+	const loopMenuItem = (menus: any[]): MenuDataItem[] =>
+		menus.map(({ icon, routes, ...item }) => ({
+			...item,
+			icon: icon && <div className={icon}></div>,
+			children: routes && loopMenuItem(routes),
+		}))
+	const handleGetMenus = async () => {
+		const { data } = await getMenus()
+		return loopMenuItem(data)
+	}
 
 	useEffect(() => {
 		if (window.location.pathname === '/') navigate('/home')
 	}, [navigate])
-
-	const [pathname, setPathname] = useState(location.pathname)
 
 	if (typeof document === 'undefined') {
 		return <div />
@@ -51,10 +56,7 @@ export const Layout = () => {
 						menu={{
 							defaultOpenAll: true,
 							ignoreFlatMenu: true,
-							request: async () => {
-								await waitTime(2000)
-								return routes
-							},
+							request: handleGetMenus,
 						}}
 						locale='zh-CN'
 						prefixCls='my-prefix'

@@ -85,7 +85,6 @@ const generateRoutes = (routes: RouteConfig[]) => {
 	})
 	return result
 }
-console.log(generateRoutes(AsyncRoutes))
 
 // 检查当前用户是否有访问特定路由的权限
 
@@ -99,8 +98,6 @@ const routes: CustomRouteObject[] = [
 		element: <Login />,
 	},
 ]
-
-console.log([...routes, ...generateRoutes(AsyncRoutes)])
 
 const router = createBrowserRouter([...routes, ...generateRoutes(AsyncRoutes)])
 
