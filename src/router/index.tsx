@@ -15,6 +15,7 @@ const Parent = lazy(() => import('../views/props/Parent.tsx'))
 const TicTacToe = lazy(() => import('@/views/Tic-Tac-Toe/Board.tsx'))
 const Login = lazy(() => import('@/views/Login.tsx'))
 const Alipay = lazy(() => import('@/views/Alipay/index.tsx'))
+const Menu = lazy(() => import('@/views/permissions/Menu.tsx'))
 
 // 假设当前用户的角色
 const currentUserRole = 'admin'
@@ -29,6 +30,7 @@ const componentsMap = {
 	Parent,
 	TicTacToe,
 	Alipay,
+	Menu,
 }
 
 interface RouteConfig {
@@ -49,6 +51,11 @@ const AsyncRoutes: RouteConfig[] = [
 				path: '/home',
 				element: 'Home',
 				permissions: ['HOME'],
+			},
+			{
+				path: '/menu',
+				element: 'Menu',
+				permissions: ['Menu'],
 			},
 			{
 				path: '/unocss',

@@ -9,7 +9,10 @@ const unocssConfig: UserConfig = defineConfig({
 	safelist: [],
 	presets: [
 		presetUno(),
-		presetAttributify(),
+		presetAttributify({
+			prefix: 'un-',
+			prefixedOnly: true,
+		}),
 		presetRemToPx({ baseFontSize: 4 }),
 		presetIcons({
 			collections: {

@@ -6,5 +6,6 @@ export function getMenus() {
 	return request<[]>({
 		url: '/menus',
 		method: 'GET',
+		isShowLoading: false,
 	})
 }
