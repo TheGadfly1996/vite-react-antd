@@ -17,6 +17,8 @@ const unocssConfig: UserConfig = defineConfig({
 		presetIcons({
 			collections: {
 				custom: FileSystemIconLoader('./src/assets/svg', (svg) => svg.replace(/#fff/, 'currentColor')),
+				antd: () => import('@iconify-json/ant-design/icons.json').then((i) => i.default),
+				mdi: () => import('@iconify-json/mdi/icons.json').then((i) => i.default),
 			},
 			extraProperties: { display: 'inline-block', 'vertical-align': 'middle', 'font-size': '16px' },
 		}),
