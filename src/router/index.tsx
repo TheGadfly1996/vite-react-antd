@@ -15,7 +15,7 @@ const Parent = lazy(() => import('../views/props/Parent.tsx'))
 const TicTacToe = lazy(() => import('@/views/Tic-Tac-Toe/Board.tsx'))
 const Login = lazy(() => import('@/views/Login.tsx'))
 const Alipay = lazy(() => import('@/views/Alipay/index.tsx'))
-const Menu = lazy(() => import('@/views/permissions/Menu.tsx'))
+const Menu = lazy(() => import('@/views/permissions/menu/Menu.tsx'))
 
 // 假设当前用户的角色
 const currentUserRole = 'admin'

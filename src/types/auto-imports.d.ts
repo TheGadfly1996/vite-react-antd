@@ -25,6 +25,7 @@ declare global {
   const Navigate: typeof import('react-router-dom')['Navigate']
   const Outlet: typeof import('react-router-dom')['Outlet']
   const Pagination: typeof import('antd')['Pagination']
+  const Popover: typeof import('antd')['Popover']
   const Radio: typeof import('antd')['Radio']
   const Route: typeof import('react-router-dom')['Route']
   const Routes: typeof import('react-router-dom')['Routes']

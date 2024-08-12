@@ -1,5 +1,6 @@
 import { Table, Input } from 'antd'
 import AntdIcons from '@/components/AntdIcons'
+import menuCss from './menu.module.scss'
 
 const { Column } = Table
 const { Search } = Input
@@ -38,19 +39,24 @@ export default function Menu() {
 		],
 		parentDirectory: '',
 		type: '',
+		icon: '',
 	})
 	function onTreeChange(value: string) {
 		console.log(value)
 		setFormData({ ...formData, parentDirectory: value })
-	}
-	function onSearch(v) {
-		console.log(v)
 	}
 
 	const [title, setTitle] = useState('新增菜单')
 	const [isShowModal, setIsShowModal] = useState(false)
 	function handleAdd() {
 		setIsShowModal(true)
+	}
+	// 处理从子组件接收到的数据
+	const [isShowIconPopover, setIsShowIconPopover] = useState(false)
+	const handleChangeIcon = (childData: string) => {
+		console.log(childData)
+		setFormData({ ...formData, icon: childData })
+		setIsShowIconPopover(false)
 	}
 
 	return (
@@ -79,13 +85,24 @@ export default function Menu() {
 						</Radio.Group>
 					</Form.Item>
 
-					<Form.Item label='TreeSelect'>
+					<Form.Item label='上级菜单'>
 						<TreeSelect value={formData.parentDirectory} treeDefaultExpandAll onChange={onTreeChange} treeData={formData.treeData} />
 					</Form.Item>
 
-					<Form.Item label='Input'>
-						<Search placeholder='请输入图标名称' allowClear onSearch={onSearch} />
-						<AntdIcons />
+					<Form.Item label='图标'>
+						<Popover
+							open={isShowIconPopover}
+							rootClassName='root'
+							overlayClassName={menuCss.root}
+							content={<AntdIcons onIconChange={handleChangeIcon} />}
+							placement='bottom'
+							trigger='click'
+							onOpenChange={(isShow) => {
+								setIsShowIconPopover(isShow)
+							}}
+						>
+							<Search readOnly prefix={<div className={`${formData.icon} text-bluegray`}></div>} value={formData.icon} placeholder='请输入图标名称' />
+						</Popover>
 					</Form.Item>
 				</Form>
 			</Modal>
