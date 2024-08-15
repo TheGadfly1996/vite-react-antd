@@ -1,62 +1,61 @@
 import { Table, Input } from 'antd'
-import AntdIcons from '@/components/AntdIcons'
 import menuCss from './menu.module.scss'
+import { DownOutlined } from '@ant-design/icons'
+import AntdIcons from '@/components/AntdIcons'
+
+import { CreateMenus } from '@/axios/api/menu'
 
 const { Column } = Table
-const { Search } = Input
-
+const treeData = [
+	// {
+	// 	title: '系统管理',
+	// 	value: '0-0',
+	// 	children: [
+	// 		{ title: '用户管理', value: '0-0-0', isLeaf: true },
+	// 		{ title: '菜单管理', value: '0-0-1', isLeaf: true },
+	// 	],
+	// },
+	// {
+	// 	title: '系统测试',
+	// 	value: '0-1',
+	// 	children: [],
+	// },
+]
 export default function Menu() {
-	const [data, setData] = useState([
-		{
-			name: '菜单管理',
-			icon: '1',
-			key: '1',
-			createTime: '2024-08-01',
-		},
-		{
-			name: '用户管理',
-			icon: '2',
-			key: '2',
-			createTime: '2024-08-02',
-		},
-	])
-	// 表单
-	const [formData, setFormData] = useState({
-		treeData: [
-			{
-				title: '系统管理',
-				value: '0-0',
-				children: [
-					{ title: '用户管理', value: '0-0-0', isLeaf: true },
-					{ title: '菜单管理', value: '0-0-1', isLeaf: true },
-				],
-			},
-			{
-				title: '系统测试',
-				value: '0-1',
-				children: [],
-			},
-		],
-		parentDirectory: '',
-		type: '',
-		icon: '',
-	})
-	function onTreeChange(value: string) {
-		console.log(value)
-		setFormData({ ...formData, parentDirectory: value })
-	}
+	const tableData = []
 
+	// 弹窗标题
 	const [title, setTitle] = useState('新增菜单')
 	const [isShowModal, setIsShowModal] = useState(false)
 	function handleAdd() {
 		setIsShowModal(true)
 	}
-	// 处理从子组件接收到的数据
+
+	// 表单数据
+	const initialData = {
+		type: '1',
+		icon: '',
+		name: '系统管理',
+		menu_order: 0,
+		route: '/system-manage',
+		parent_id: '',
+	}
+
+	const [form] = Form.useForm()
+	const icon = Form.useWatch('icon', form)
+	const parent_id = Form.useWatch('parent_id', form)
+
+	// 处理从子组件接收到的图标数据
 	const [isShowIconPopover, setIsShowIconPopover] = useState(false)
-	const handleChangeIcon = (childData: string) => {
-		console.log(childData)
-		setFormData({ ...formData, icon: childData })
+	const handleChangeIcon = (icon: string) => {
+		form.setFieldsValue({ icon })
 		setIsShowIconPopover(false)
+	}
+	// 创建新菜单
+	async function handleConfirm() {
+		const values = form.getFieldsValue()
+		const data = await CreateMenus(values)
+		setIsShowModal(false)
 	}
 
 	return (
@@ -64,32 +63,31 @@ export default function Menu() {
 			<Button onClick={handleAdd} type='primary'>
 				新增
 			</Button>
-			<Table sticky dataSource={data}>
+			<Table sticky dataSource={tableData}>
 				<Column title='名称' dataIndex='name' align='center' />
 				<Column title='图标' dataIndex='icon' align='center' />
 				<Column title='权限标识' dataIndex='key' align='center' />
 				<Column title='创建时间' dataIndex='createTime' align='center' />
 			</Table>
-			<Modal centered title={title} open={isShowModal} onOk={() => setIsShowModal(false)} onCancel={() => setIsShowModal(false)}>
-				<Form labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout='horizontal' style={{ maxWidth: 600 }}>
-					<Form.Item label='菜单类型'>
-						<Radio.Group
-							onChange={(e) => {
-								setFormData({ ...formData, type: e.target.value })
-							}}
-							defaultValue='1'
-						>
+			<Modal centered title={title} open={isShowModal} onOk={handleConfirm} onCancel={() => setIsShowModal(false)}>
+				<Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout='horizontal' initialValues={initialData} style={{ maxWidth: 600 }}>
+					<Form.Item name='type' label='菜单类型'>
+						<Radio.Group>
 							<Radio.Button value='1'> 目录 </Radio.Button>
 							<Radio.Button value='2'> 菜单 </Radio.Button>
 							<Radio.Button value='3'> 按钮 </Radio.Button>
 						</Radio.Group>
 					</Form.Item>
-
-					<Form.Item label='上级菜单'>
-						<TreeSelect value={formData.parentDirectory} treeDefaultExpandAll onChange={onTreeChange} treeData={formData.treeData} />
+					<Form.Item name='name' label='菜单名称'>
+						<Input />
 					</Form.Item>
-
-					<Form.Item label='图标'>
+					<Form.Item name='parent_id' label='上级菜单'>
+						<TreeSelect placeholder='不填为主目录' value={parent_id} treeDefaultExpandAll treeData={treeData} />
+					</Form.Item>
+					<Form.Item name='route' label='路由地址'>
+						<Input />
+					</Form.Item>
+					<Form.Item label='菜单图标' name='icon'>
 						<Popover
 							open={isShowIconPopover}
 							rootClassName='root'
@@ -101,7 +99,21 @@ export default function Menu() {
 								setIsShowIconPopover(isShow)
 							}}
 						>
-							<Search readOnly prefix={<div className={`${formData.icon} text-bluegray`}></div>} value={formData.icon} placeholder='请输入图标名称' />
+							<Input
+								className='cursor-pointer'
+								suffix={
+									<DownOutlined
+										className='text-#BFBFBF'
+										onClick={() => {
+											setIsShowIconPopover(true)
+										}}
+									/>
+								}
+								readOnly
+								value={icon}
+								prefix={<div className={`${icon} text-bluegray`}></div>}
+								placeholder='请选择一个图标'
+							/>
 						</Popover>
 					</Form.Item>
 				</Form>

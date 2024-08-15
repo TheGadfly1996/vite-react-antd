@@ -9,3 +9,10 @@ export function getMenus() {
 		isShowLoading: false,
 	})
 }
+export function CreateMenus(data: { name: string; type: string; route: string; parent_id: string | null; icon: string; menu_order: number }) {
+	return request<[]>({
+		url: '/menus',
+		method: 'POST',
+		data,
+	})
+}
