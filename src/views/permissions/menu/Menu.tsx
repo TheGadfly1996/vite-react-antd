@@ -3,7 +3,7 @@ import menuCss from './menu.module.scss'
 import { DownOutlined } from '@ant-design/icons'
 import AntdIcons from '@/components/AntdIcons'
 
-import { CreateMenus } from '@/axios/api/menu'
+import { CreateMenus, GetMenus } from '@/axios/api/menu'
 
 const { Column } = Table
 const treeData = [
@@ -22,7 +22,50 @@ const treeData = [
 	// },
 ]
 export default function Menu() {
-	const tableData = []
+	// 表格数据
+	const [treeData, setTreeData] = useState([])
+	const [tableData, setTableData] = useState([])
+	const columns = [
+		{
+			title: '名称',
+			dataIndex: 'name',
+			key: 'name',
+			align: 'center',
+		},
+		{
+			title: '图标',
+			dataIndex: 'icon',
+			key: 'icon',
+			align: 'center',
+		},
+		{
+			title: '路由',
+			dataIndex: 'route',
+			key: 'route',
+			align: 'center',
+		},
+		{
+			title: '权限标识',
+			dataIndex: 'permission',
+			key: 'permission',
+			align: 'center',
+		},
+		{
+			title: '创建时间',
+			dataIndex: 'create_time',
+			key: 'create_time',
+			align: 'center',
+		},
+	]
+	async function fetchMenus() {
+		const { data } = await GetMenus()
+		console.log(data)
+		setTableData(data)
+		setTreeData(data)
+	}
+	useEffect(() => {
+		fetchMenus()
+	}, [])
 
 	// 弹窗标题
 	const [title, setTitle] = useState('新增菜单')
@@ -39,11 +82,13 @@ export default function Menu() {
 		menu_order: 0,
 		route: '/system-manage',
 		parent_id: '',
+		permission: '',
 	}
 
 	const [form] = Form.useForm()
 	const icon = Form.useWatch('icon', form)
 	const parent_id = Form.useWatch('parent_id', form)
+	const type = Form.useWatch('type', form)
 
 	// 处理从子组件接收到的图标数据
 	const [isShowIconPopover, setIsShowIconPopover] = useState(false)
@@ -55,6 +100,7 @@ export default function Menu() {
 	async function handleConfirm() {
 		const values = form.getFieldsValue()
 		const data = await CreateMenus(values)
+		fetchMenus()
 		setIsShowModal(false)
 	}
 
@@ -63,11 +109,12 @@ export default function Menu() {
 			<Button onClick={handleAdd} type='primary'>
 				新增
 			</Button>
-			<Table sticky dataSource={tableData}>
+			<Table columns={columns} sticky dataSource={tableData}>
 				<Column title='名称' dataIndex='name' align='center' />
 				<Column title='图标' dataIndex='icon' align='center' />
-				<Column title='权限标识' dataIndex='key' align='center' />
-				<Column title='创建时间' dataIndex='createTime' align='center' />
+				<Column title='路由' dataIndex='route' align='center' />
+				<Column title='权限标识' dataIndex='permission' align='center' />
+				<Column title='创建时间' dataIndex='create_time' align='center' />
 			</Table>
 			<Modal centered title={title} open={isShowModal} onOk={handleConfirm} onCancel={() => setIsShowModal(false)}>
 				<Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout='horizontal' initialValues={initialData} style={{ maxWidth: 600 }}>
@@ -82,11 +129,17 @@ export default function Menu() {
 						<Input />
 					</Form.Item>
 					<Form.Item name='parent_id' label='上级菜单'>
-						<TreeSelect placeholder='不填为主目录' value={parent_id} treeDefaultExpandAll treeData={treeData} />
+						<TreeSelect fieldNames={{ label: 'name', value: 'id' }} placeholder='不填为主目录' value={parent_id} treeDefaultExpandAll treeData={treeData} />
 					</Form.Item>
 					<Form.Item name='route' label='路由地址'>
 						<Input />
 					</Form.Item>
+					{type !== '1' && (
+						<Form.Item name='permission' label='权限标识'>
+							<Input />
+						</Form.Item>
+					)}
+
 					<Form.Item label='菜单图标' name='icon'>
 						<Popover
 							open={isShowIconPopover}

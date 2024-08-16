@@ -7,7 +7,7 @@ import { PageContainer, ProCard, ProConfigProvider, ProLayout, SettingDrawer } f
 import Spin from '@/components/Spin'
 import LanguageMenu from './LanguageMenu'
 
-import { getMenus } from '@/axios/api/menu'
+import { GetMenus } from '@/axios/api/menu'
 
 export const Layout = () => {
 	const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({})
@@ -25,7 +25,7 @@ export const Layout = () => {
 			children: routes && loopMenuItem(routes),
 		}))
 	const handleGetMenus = async () => {
-		const { data } = await getMenus()
+		const { data } = await GetMenus()
 		return loopMenuItem(data)
 	}
 
