@@ -1,9 +1,10 @@
-import useAxios from '@/axios/request/index'
+import type { RouteData } from './types'
 
+import useAxios from '@/axios/request/index'
 const { request } = useAxios()
 
-export function GetMenus() {
-	return request<[]>({
+export function GetRoutes() {
+	return request<RouteData[]>({
 		url: '/menus',
 		method: 'GET',
 		isShowLoading: false,
