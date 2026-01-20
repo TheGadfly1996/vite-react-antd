@@ -5,7 +5,7 @@ import '@/i18n/index.ts'
 
 import './styles/index.scss'
 import 'virtual:uno.css'
-
+import '@/config/icons'
 ReactDOM.createRoot(document.getElementById('root')!).render(
 	<React.StrictMode>
 		<Routes />
