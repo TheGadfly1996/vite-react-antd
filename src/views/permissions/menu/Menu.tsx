@@ -1,9 +1,10 @@
 import { Table, Input } from 'antd'
+import type { TableColumnsType } from 'antd'
 import menuCss from './menu.module.scss'
 import { DownOutlined } from '@ant-design/icons'
 import AntdIcons from '@/components/AntdIcons'
 
-import { CreateMenus, GetMenus } from '@/axios/api/menu'
+import { CreateMenus, GetRoutes } from '@/axios/api/menu'
 
 const { Column } = Table
 const treeData = [
@@ -25,7 +26,7 @@ export default function Menu() {
 	// 表格数据
 	const [treeData, setTreeData] = useState([])
 	const [tableData, setTableData] = useState([])
-	const columns = [
+	const columns: TableColumnsType = [
 		{
 			title: '名称',
 			dataIndex: 'name',
@@ -58,7 +59,7 @@ export default function Menu() {
 		},
 	]
 	async function fetchMenus() {
-		const { data } = await GetMenus()
+		const { data } = await GetRoutes()
 		console.log(data)
 		setTableData(data)
 		setTreeData(data)
@@ -109,13 +110,7 @@ export default function Menu() {
 			<Button onClick={handleAdd} type='primary'>
 				新增
 			</Button>
-			<Table columns={columns} sticky dataSource={tableData}>
-				<Column title='名称' dataIndex='name' align='center' />
-				<Column title='图标' dataIndex='icon' align='center' />
-				<Column title='路由' dataIndex='route' align='center' />
-				<Column title='权限标识' dataIndex='permission' align='center' />
-				<Column title='创建时间' dataIndex='create_time' align='center' />
-			</Table>
+			<Table columns={columns} sticky dataSource={tableData}></Table>
 			<Modal centered title={title} open={isShowModal} onOk={handleConfirm} onCancel={() => setIsShowModal(false)}>
 				<Form form={form} labelCol={{ span: 4 }} wrapperCol={{ span: 14 }} layout='horizontal' initialValues={initialData} style={{ maxWidth: 600 }}>
 					<Form.Item name='type' label='菜单类型'>

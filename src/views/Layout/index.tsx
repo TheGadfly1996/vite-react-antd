@@ -1,4 +1,5 @@
 import type { ProSettings, MenuDataItem } from '@ant-design/pro-components'
+import type { RouteData } from '@/axios/api/menu/types'
 
 import { Suspense, useState } from 'react'
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
@@ -7,7 +8,7 @@ import { PageContainer, ProCard, ProConfigProvider, ProLayout, SettingDrawer } f
 import Spin from '@/components/Spin'
 import LanguageMenu from './LanguageMenu'
 
-import { GetMenus } from '@/axios/api/menu'
+import { GetRoutes } from '@/axios/api/menu'
 
 export const Layout = () => {
 	const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({})
@@ -18,15 +19,22 @@ export const Layout = () => {
 	const [pathname, setPathname] = useState(location.pathname)
 
 	// 获取菜单数据
-	const loopMenuItem = (menus: any[]): MenuDataItem[] =>
-		menus.map(({ icon, routes, ...item }) => ({
-			...item,
-			icon: icon && <div className={icon}></div>,
-			children: routes && loopMenuItem(routes),
-		}))
+	const getMenu = (menus: RouteData[]): MenuDataItem[] => {
+		return menus.map(({ meta: { icon, title }, path, children, ...item }) => {
+			return {
+				...item,
+				name: title,
+				icon: icon && <div className={icon}></div>,
+				children: children ? getMenu(children) : undefined,
+			}
+		})
+	}
+
 	const handleGetMenus = async () => {
-		const { data } = await GetMenus()
-		return loopMenuItem(data)
+		const { data } = await GetRoutes()
+		console.log('data', data)
+
+		return getMenu(data)
 	}
 
 	useEffect(() => {
@@ -116,7 +124,6 @@ export const Layout = () => {
 								</div>
 							)
 						}}
-						onMenuHeaderClick={(e) => console.log(e)}
 						menuItemRender={(menuItemProps: MenuDataItem, defaultDom: React.ReactNode) => {
 							if (menuItemProps.isUrl || menuItemProps.children) {
 								return defaultDom

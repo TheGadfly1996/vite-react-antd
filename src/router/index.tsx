@@ -53,7 +53,7 @@ const AsyncRoutes: RouteConfig[] = [
 				permissions: ['HOME'],
 			},
 			{
-				path: '/menu',
+				path: '/menu-manage',
 				element: 'Menu',
 				permissions: ['Menu'],
 			},
