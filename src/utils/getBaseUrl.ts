@@ -8,10 +8,7 @@ import { adminApiMap, clientApiMap } from '@/config/apiMap'
  */
 
 const getBaseURL = (url = '', region: 'ZH' | 'EN' | 'EU') => {
-  console.log(url)
-
   if (['/account/admin/login', '/account/admin/profile'].includes(url)) {
-    console.log(adminApiMap.get(import.meta.env.VITE_APP_ENV)?.[region])
     return adminApiMap.get(import.meta.env.VITE_APP_ENV)?.[region] || ''
   }
 
