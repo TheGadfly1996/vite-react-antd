@@ -68,49 +68,41 @@ export const useAuthStore = createSelectors(
         login: async (userInfo: { username: string; password: string }) => {
           const { username, password } = userInfo
 
-          try {
-            const response = await login({
-              account: username.trim(),
-              password: RSA(password),
-            })
+          const response = await login({
+            account: username.trim(),
+            password: RSA(password),
+          })
 
-            const { data } = response
-            const { admin_token, admin_account } = data
-            get().setToken(admin_token, admin_account)
+          const { data } = response
+          const { admin_token, admin_account } = data
+          get().setToken(admin_token, admin_account)
 
-            return data
-          } catch (error) {
-            throw error
-          }
+          return data
         },
 
         // 获取用户信息
         getInfo: async () => {
-          try {
-            const { account } = get()
-            const response = await getUserInfo({ admin_account: account })
-            const { data } = response
+          const { account } = get()
+          const response = await getUserInfo({ admin_account: account })
+          const { data } = response
 
-            if (!data) {
-              throw new Error('验证失败,请重新登录')
-            }
-
-            const { roles, username } = data
-            if (!roles || roles.length <= 0) {
-              throw new Error('用户角色为空')
-            }
-
-            get().setUserProfile({
-              name: username,
-              avatar: data.avatar,
-              account: account,
-            })
-            get().setRoles(roles)
-
-            return data
-          } catch (error) {
-            throw error
+          if (!data) {
+            throw new Error('验证失败,请重新登录')
           }
+
+          const { roles, username } = data
+          if (!roles || roles.length <= 0) {
+            throw new Error('用户角色为空')
+          }
+
+          get().setUserProfile({
+            name: username,
+            avatar: data.avatar,
+            account,
+          })
+          get().setRoles(roles)
+
+          return data
         },
 
         logout: () => {
@@ -130,7 +122,7 @@ export const useAuthStore = createSelectors(
           avatar: state.avatar,
           roles: state.roles,
         }),
-      }
-    )
-  )
+      },
+    ),
+  ),
 )
