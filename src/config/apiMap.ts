@@ -79,7 +79,7 @@ const proxyMap: Record<string, string> = {
   adminEN: 'https://test-api-admin.robosen.com',
   adminEU: 'https://test-eu-api-admin.robosen.com',
 }
-const proxy: Record<string, any> = {}
+export const proxy: Record<string, any> = {}
 Object.keys(proxyMap).forEach((key) => {
   proxy[key] = {
     target: proxyMap[key],

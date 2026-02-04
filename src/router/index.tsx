@@ -6,7 +6,7 @@ import { Layout } from '@/views/Layout/index.tsx'
 import type { RouteObject } from 'react-router-dom'
 
 type CustomRouteObject = RouteObject & {
-	permissions?: string[]
+  permissions?: string[]
 }
 
 const Unocss = lazy(() => import('../views/unocss/index.tsx'))
@@ -22,96 +22,99 @@ const currentUserRole = 'admin'
 
 // 组件映射
 const componentsMap = {
-	Layout,
-	ErrorPage,
-	Home,
-	Unocss,
-	Zustand,
-	Parent,
-	TicTacToe,
-	Alipay,
-	Menu,
+  Layout,
+  ErrorPage,
+  Home,
+  Unocss,
+  Zustand,
+  Parent,
+  TicTacToe,
+  Alipay,
+  Menu,
 }
 
 interface RouteConfig {
-	path: string
-	element: string
-	permissions?: string[]
-	errorElement?: string
-	children?: RouteConfig[] // 使用递归类型定义子路由
+  path: string
+  element: string
+  permissions?: string[]
+  errorElement?: string
+  children?: RouteConfig[] // 使用递归类型定义子路由
+  redirect?: string
 }
 // 角色到路由权限的映射
 const AsyncRoutes: RouteConfig[] = [
-	{
-		path: '/',
-		element: 'Layout',
-		errorElement: 'ErrorPage',
-		children: [
-			{
-				path: '/home',
-				element: 'Home',
-				permissions: ['HOME'],
-			},
-			{
-				path: '/menu-manage',
-				element: 'Menu',
-				permissions: ['Menu'],
-			},
-			{
-				path: '/unocss',
-				element: 'Unocss',
-				permissions: ['UNOCSS'],
-			},
-			{
-				path: '/zustand',
-				element: 'Zustand',
-			},
-			{
-				path: '/hooks-test',
-				element: 'Parent',
-			},
-			{
-				path: '/TicTacToe',
-				element: 'TicTacToe',
-			},
-			{
-				path: '/alipay',
-				element: 'Alipay',
-			},
-		],
-	},
+  {
+    path: '/',
+    element: 'Layout',
+    errorElement: 'ErrorPage',
+    redirect: '/home',
+    children: [
+      {
+        path: '/home',
+        element: 'Home',
+        permissions: ['HOME'],
+      },
+      {
+        path: '/menu-manage',
+        element: 'Menu',
+        permissions: ['Menu'],
+      },
+      {
+        path: '/unocss',
+        element: 'Unocss',
+        permissions: ['UNOCSS'],
+      },
+      {
+        path: '/zustand',
+        element: 'Zustand',
+      },
+      {
+        path: '/hooks-test',
+        element: 'Parent',
+      },
+      {
+        path: '/TicTacToe',
+        element: 'TicTacToe',
+      },
+      {
+        path: '/alipay',
+        element: 'Alipay',
+      },
+    ],
+  },
 ]
 const generateRoutes = (routes: RouteConfig[]) => {
-	const result = routes.map((item) => {
-		const ElementComponent = componentsMap[item.element as keyof typeof componentsMap]
-		return {
-			...item,
-			element: <ElementComponent />,
-			children: item.children ? generateRoutes(item.children) : [],
-		}
-	})
-	return result
+  const result = routes.map((item) => {
+    const ElementComponent =
+      componentsMap[item.element as keyof typeof componentsMap]
+    return {
+      ...item,
+      element: <ElementComponent />,
+      children: item.children ? generateRoutes(item.children) : [],
+    }
+  })
+  return result
 }
 
 // 检查当前用户是否有访问特定路由的权限
 
 const routes: CustomRouteObject[] = [
-	{
-		path: '*',
-		element: <Navigate to={'/home'} replace />,
-	},
-	{
-		path: '/login',
-		element: <Login />,
-	},
+  {
+    path: '*',
+    element: <Navigate to={'/home'} replace />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
 ]
 
 const router = createBrowserRouter([...routes, ...generateRoutes(AsyncRoutes)])
 
 export const Routes: React.FC = () => {
-	return (
-		<Suspense fallback={<div>Loading...</div>}>
-			<RouterProvider router={router} />
-		</Suspense>
-	)
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  )
 }
