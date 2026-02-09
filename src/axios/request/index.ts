@@ -1,15 +1,14 @@
-import { notification } from 'antd'
 import { useGlobalStore } from '@/store/global'
+import getBaseURL from '@/utils/getBaseUrl'
+import { message } from 'antd'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import getBaseURL from '@/utils/getBaseUrl'
 // 使用模块扩展为 AxiosRequestConfig 添加自定义属性
 declare module 'axios' {
   interface AxiosRequestConfig {
     isShowLoading?: boolean // 是否显示 loading
     isInterceptError?: boolean // 是否由全局拦截处理错误
-    isShowErrorMessage?: boolean // 是否显示错误通知
   }
 }
 
@@ -36,9 +35,9 @@ const handleError = (status: number, msg: string) => {
   }
 
   if (errorMessages[status]) {
-    notification.error({ title: errorMessages[status] || msg, duration: 2 })
+    message.error(errorMessages[status] || msg)
   } else if (status >= 3000) {
-    notification.error({ title: msg, duration: 2 })
+    message.error(msg)
   }
 
   // 特定错误码的特殊处理
@@ -55,7 +54,13 @@ const handleError = (status: number, msg: string) => {
  * 创建并配置一个新的 Axios 实例
  * @param config Axios 的基础配置
  */
-function createAxiosInstance(config: AxiosRequestConfig = {}): {
+function createAxiosInstance(
+  config: AxiosRequestConfig = {
+    isInterceptError: true,
+    isShowErrorMessage: true,
+    isShowLoading: true,
+  }
+): {
   request: AxiosInstance['request']
   axiosInstance: AxiosInstance
 } {
@@ -71,7 +76,7 @@ function createAxiosInstance(config: AxiosRequestConfig = {}): {
   // 请求拦截器
   axiosInstance.interceptors.request.use(
     (requestConfig) => {
-      if (requestConfig.isShowLoading !== false) {
+      if (requestConfig.isShowLoading) {
         useGlobalStore.getState().changeLoadingStatus(true)
       }
       // 添加 token 和 account 到请求头
@@ -95,7 +100,7 @@ function createAxiosInstance(config: AxiosRequestConfig = {}): {
   // 响应拦截器
   axiosInstance.interceptors.response.use(
     (response) => {
-      if (response.config.isShowLoading !== false) {
+      if (response.config.isShowLoading) {
         useGlobalStore.getState().changeLoadingStatus(false)
       }
 
@@ -105,29 +110,27 @@ function createAxiosInstance(config: AxiosRequestConfig = {}): {
         return data
       }
 
-      if (response.config.isInterceptError === true) {
+      if (!response.config.isInterceptError) {
         return Promise.reject(data)
       }
 
       // 统一处理业务错误
       handleError(data.code, data.msg)
-      return Promise.reject(data)
     },
     (error) => {
       setTimeout(() => {
-        if (error.config.isShowLoading !== false) {
+        if (error.config.isShowLoading) {
           useGlobalStore.getState().changeLoadingStatus(false)
         }
       }, 300)
 
-      if (error.config?.isShowErrorMessage === false) {
+      if (!error.config.isShowErrorMessage) {
         return Promise.reject(error)
       }
 
       // 统一处理 HTTP 错误
-      const message =
-        error.response?.data?.msg || error.message || '请求发生错误'
-      notification.error({ title: message, duration: 2 })
+      const message = error.response?.data?.msg || error.message || '请求发生错误'
+      message.error({ title: message, duration: 2 })
 
       return Promise.reject(error)
     }

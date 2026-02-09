@@ -7,6 +7,7 @@ export function login(data: { account: string; password: string }) {
     url: '/account/admin/login',
     method: 'POST',
     data,
+    isInterceptError: false,
   })
 }
 

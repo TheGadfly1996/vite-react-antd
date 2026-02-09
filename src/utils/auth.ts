@@ -1,7 +1,7 @@
 // src/utils/auth.ts
 // Token 管理工具函数
 
-const TOKEN_KEY = 'Authorization'
+const TOKEN_KEY = 'token'
 const ACCOUNT_KEY = 'account'
 
 export interface TokenData {
@@ -13,7 +13,6 @@ export interface TokenData {
  * 获取 token
  */
 export const getToken = (): string => {
-  if (typeof window === 'undefined') return ''
   return window.localStorage.getItem(TOKEN_KEY) || ''
 }
 
@@ -21,7 +20,6 @@ export const getToken = (): string => {
  * 设置 token
  */
 export const setToken = (data: TokenData): void => {
-  if (typeof window === 'undefined') return
   window.localStorage.setItem(TOKEN_KEY, data.admin_token)
   window.localStorage.setItem(ACCOUNT_KEY, data.admin_account)
 }
@@ -30,7 +28,6 @@ export const setToken = (data: TokenData): void => {
  * 移除 token
  */
 export const removeToken = (): void => {
-  if (typeof window === 'undefined') return
   window.localStorage.removeItem(TOKEN_KEY)
   window.localStorage.removeItem(ACCOUNT_KEY)
 }
@@ -39,6 +36,5 @@ export const removeToken = (): void => {
  * 获取账户名
  */
 export const getAccount = (): string => {
-  if (typeof window === 'undefined') return ''
   return window.localStorage.getItem(ACCOUNT_KEY) || ''
 }

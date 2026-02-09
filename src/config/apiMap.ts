@@ -73,19 +73,17 @@ export const adminApiMap = new Map([
   ],
 ])
 
-// 代理配置
 const proxyMap: Record<string, string> = {
   adminZH: 'https://test-api-admin.robosen.cn',
   adminEN: 'https://test-api-admin.robosen.com',
   adminEU: 'https://test-eu-api-admin.robosen.com',
 }
+
 export const proxy: Record<string, any> = {}
 Object.keys(proxyMap).forEach((key) => {
-  proxy[key] = {
+  proxy[`/${key}`] = {
     target: proxyMap[key],
     changeOrigin: true,
-    pathRewrite: {
-      [`^/${key}`]: '',
-    },
+    rewrite: (path: string) => path.replace(new RegExp(`^/${key}`), ''),
   }
 })
