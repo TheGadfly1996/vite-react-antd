@@ -43,7 +43,7 @@ export const Layout = () => {
   }
 
   useEffect(() => {
-    if (window.location.pathname === '/') navigate('/home')
+    if (window.location.pathname === '/') navigate('/dolls-manage/model')
   }, [navigate])
 
   if (typeof document === 'undefined') {

@@ -1,7 +1,7 @@
 import type { MenuConfig, RouteConfig } from '@/router/types'
 import { useAuthStore } from '@/store/auth'
 import React from 'react'
-import { componentsMap } from '@/router/cloud-routes'
+import { componentsMap } from '@/router/components-map'
 
 export const hasPermission = (roles: string[], permissions: string[]) => {
   return roles.some((role) => permissions.includes(role))
