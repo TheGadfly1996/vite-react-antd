@@ -7,7 +7,7 @@ type RouteMeta = {
 
 export type MenuConfig = {
   path: string
-  element: string
+  element?: string
   permissions?: string[]
   children?: MenuConfig[]
   meta?: RouteMeta

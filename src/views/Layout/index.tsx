@@ -1,8 +1,6 @@
-import type { ProSettings, MenuDataItem } from '@ant-design/pro-components'
-import type { MenuConfig, RouteConfig } from '@/router/types'
+import type { MenuConfig } from '@/router/types'
+import type { MenuDataItem, ProSettings } from '@ant-design/pro-components'
 
-import { Suspense, useState } from 'react'
-import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   PageContainer,
   ProCard,
@@ -10,12 +8,14 @@ import {
   ProLayout,
   SettingDrawer,
 } from '@ant-design/pro-components'
+import { Suspense, useState } from 'react'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import Spin from '@/components/Spin'
-import LanguageMenu from './LanguageMenu'
+import { hasPermission } from '@/hooks/useDynamicRoute'
 import { menuRoutes } from '@/router/cloud-routes'
 import { useAuthStore } from '@/store/auth'
-import { hasPermission } from '@/hooks/useDynamicRoute'
+import LanguageMenu from './LanguageMenu'
 
 export const Layout = () => {
   const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({})
@@ -74,7 +74,13 @@ export const Layout = () => {
             locale="zh-CN"
             prefixCls="my-prefix"
             token={{
-              sider: {},
+              sider: {
+                colorMenuBackground: '#fff',
+                colorMenuItemDivider: '#dfdfdf',
+                colorTextMenu: '#595959',
+                colorTextMenuSelected: 'rgba(42,122,251,1)',
+                colorBgMenuItemSelected: 'rgba(230,243,254,1)',
+              },
             }}
             avatarProps={{
               src: 'https://files.catbox.moe/vpzre4.png',
@@ -124,17 +130,11 @@ export const Layout = () => {
                 </div>
               )
             }}
-            menuItemRender={(
-              menuItemProps: MenuDataItem,
-              defaultDom: React.ReactNode,
-            ) => {
+            menuItemRender={(menuItemProps: MenuDataItem, defaultDom: React.ReactNode) => {
               if (menuItemProps.isUrl || menuItemProps.children) {
                 return defaultDom
               }
-              if (
-                menuItemProps.path &&
-                location.pathname !== menuItemProps.path
-              ) {
+              if (menuItemProps.path && location.pathname !== menuItemProps.path) {
                 return (
                   <Link
                     to={menuItemProps.path}
@@ -144,7 +144,6 @@ export const Layout = () => {
                       setPathname(menuItemProps.path || '/home')
                     }}
                   >
-                    {/* {menuItemProps.pro_layout_parentKeys && menuItemProps.pro_layout_parentKeys.length > 0 && menuItemProps.icon} */}
                     {defaultDom}
                   </Link>
                 )

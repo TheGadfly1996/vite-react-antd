@@ -11,14 +11,15 @@ export const GenerateRoutes = (routes: MenuConfig[]): RouteConfig[] => {
   const { roles } = useAuthStore.getState()
 
   return routes.flatMap((item) => {
-    const ElementComponent =
-      componentsMap[item.element as keyof typeof componentsMap]
-
     if (!item.permissions || hasPermission(roles, item.permissions)) {
+      const ElementComponent = item.element
+        ? componentsMap[item.element as keyof typeof componentsMap]
+        : undefined
+
       return [
         {
           ...item,
-          element: React.createElement(ElementComponent),
+          element: ElementComponent ? React.createElement(ElementComponent) : undefined,
           children: item.children ? GenerateRoutes(item.children) : [],
         },
       ]
