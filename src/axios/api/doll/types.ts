@@ -1,28 +1,70 @@
 /**
- * 玩偶系列信息参数
+ * 玩偶系列信息（含数据库主键，用于更新/展示）
  */
-export interface DollSeriesParams {
-  seriesId: string
-  seriesName: string
-  productModel: string
-  characterName: string
+export interface DollSeriesInfo {
+  id: string
+  series_id: string
+  series_name: string
+}
+
+
+/**
+ * 玩偶系列响应
+ */
+export interface DollSeriesResponse {
+  total: number
+  content: (DollSeriesInfo & { create_time: string })[]
 }
 
 /**
- * 玩偶系列信息响应
+ * 玩偶系列获取参数
  */
-export interface DollSeriesResponse {
-  success: boolean
-  message: string
-  data?: {
-    id: string
-    seriesId: string
-    seriesName: string
-    productModel: string
-    characterName: string
-    createdAt: string
-    updatedAt: string
-  }
+export interface DollSeriesParams {
+  series_id?: string
+  series_name?: string
+  page?: number
+  limit?: number
+}
+
+/**
+ * 玩偶列表参数
+ */
+export interface DollParams {
+  limit?: string
+  page?: string
+  series_id?: string
+}
+
+/**
+ * 玩偶信息
+ */
+export interface DollInfo {
+  doll_id: string
+  doll_name: string
+  series_id: string
+  series_name: string
+  description: string
+  doll_image: string
+  launch_time: string
+}
+
+export interface DollInfoResponse {
+  total: number
+  content: (DollInfo & { create_time: string })[]
+}
+
+/**
+ * 更新参数
+ */
+export interface DollUpdateParams {
+  id: string
+  description?: string
+  doll_id?: string
+  doll_image?: string
+  doll_name?: string
+  launch_time?: string
+  series_id?: string
+  series_name?: string
 }
 
 /**

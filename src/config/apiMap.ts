@@ -8,9 +8,9 @@ export const clientApiMap = new Map([
   [
     'development',
     {
-      ZH: 'https://test-robosenmall.robosen.cn',
-      EN: 'https://dev-en-intelligentcloud.robosenhub.com',
-      EU: 'https://dev-eu-intelligentcloud.robosenhub.com',
+      ZH: '/doll',
+      EN: '/dollEN',
+      EU: '/dollEU',
     },
   ],
   [
@@ -77,6 +77,9 @@ const proxyMap: Record<string, string> = {
   adminZH: 'https://test-api-admin.robosen.cn',
   adminEN: 'https://test-api-admin.robosen.com',
   adminEU: 'https://test-eu-api-admin.robosen.com',
+  doll: 'https://dev-mini.robosenhub.cn',
+  dollEN: 'https://dev-en-intelligentcloud.robosenhub.com',
+  dollEU: 'https://dev-eu-intelligentcloud.robosenhub.com',
 }
 
 export const proxy: Record<string, any> = {}

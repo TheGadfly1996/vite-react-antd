@@ -13,7 +13,7 @@ declare global {
   const Checkbox: typeof import('antd')['Checkbox']
   const ColorPicker: typeof import('antd')['ColorPicker']
   const ConfigProvider: typeof import('antd').ConfigProvider
-  const DatePicker: typeof import('antd')['DatePicker']
+  const DatePicker: typeof import('antd').DatePicker
   const Divider: typeof import('antd')['Divider']
   const Dropdown: typeof import('antd').Dropdown
   const Flex: typeof import('antd')['Flex']

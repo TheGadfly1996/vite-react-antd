@@ -1,36 +1,105 @@
 import createAxiosInstance from '@/axios/request'
-import type { DollSeriesParams, DollSeriesResponse, DollImageConfigParams, DollImageConfigResponse } from './types'
+import type {
+  DollImageConfigParams,
+  DollImageConfigResponse,
+  DollInfo,
+  DollInfoResponse,
+  DollParams,
+  DollSeriesInfo,
+  DollSeriesParams,
+  DollSeriesResponse,
+  DollUpdateParams,
+} from './types'
 
 const { request } = createAxiosInstance()
 
 /**
+ * 玩偶系列相关 API
+ */
+export const DollSeriesApi = {
+  /**
+   * 创建玩偶系列
+   */
+  CreateDollSeries: (params: Omit<DollSeriesInfo, 'id'>) =>
+    request({
+      url: '/management/mini/doll/series/',
+      method: 'POST',
+      data: params,
+    }),
+  /**
+   * 获取玩偶系列列表
+   */
+  GetDollSeriesList: (params: DollSeriesParams) =>
+    request<DollSeriesResponse>({
+      url: '/management/mini/doll/series/',
+      method: 'GET',
+      params,
+    }),
+  /**
+   * 更新玩偶系列
+   */
+  UpdateDollSeries: (params: DollSeriesInfo) =>
+    request({
+      url: '/management/mini/doll/series/',
+      method: 'PUT',
+      data: params,
+    }),
+  /**
+   * 删除玩偶系列
+   */
+  DeleteDollSeries: (id: string) =>
+    request({
+      url: `/management/mini/doll/series/`,
+      method: 'DELETE',
+      params: { id },
+      isShowLoading: false,
+    }),
+}
+/**
  * 玩偶管理相关 API
  */
-export const dollApi = {
+export const DollApi = {
   /**
-   * 创建或更新玩偶系列信息
-   * TODO: 由用户定义具体的接口地址和参数
+   * 创建玩偶
    */
-  createOrUpdateSeries: (params: DollSeriesParams) =>
-    request<DollSeriesResponse>({
-      url: '/api/doll/series',
+  CreateDollSeries: (params: DollInfo) =>
+    request({
+      url: '/management/mini/doll/dolls/',
       method: 'POST',
       data: params,
     }),
 
   /**
-   * 获取玩偶系列列表
-   * TODO: 由用户定义具体的接口地址和参数
+   * 获取玩偶
    */
-  getSeriesList: () =>
-    request({
-      url: '/api/doll/series/list',
+  GetDollList: (params: DollParams) =>
+    request<DollInfoResponse>({
+      url: '/management/mini/doll/dolls/',
       method: 'GET',
+      params,
+    }),
+
+  /**
+   * 更新玩偶
+   */
+  UpdateDoll: (params: DollUpdateParams) =>
+    request({
+      url: '/management/mini/doll/dolls/',
+      method: 'PUT',
+      data: params,
+    }),
+  /**
+   * 删除玩偶系列信息
+   */
+  DeleteDoll: (id: string) =>
+    request({
+      url: `/management/mini/doll/dolls/`,
+      params: { id },
+      method: 'DELETE',
     }),
 
   /**
    * 更新玩偶图片配置
-   * TODO: 由用户定义具体的接口地址和参数
    */
   updateImageConfig: (params: DollImageConfigParams) =>
     request<DollImageConfigResponse>({
