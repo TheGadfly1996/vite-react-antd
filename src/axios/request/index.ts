@@ -1,52 +1,79 @@
 import { useGlobalStore } from '@/store/global'
 import getBaseURL from '@/utils/getBaseUrl'
 import { message } from 'antd'
-import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import type { AxiosRequestConfig } from 'axios'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-// 使用模块扩展为 AxiosRequestConfig 添加自定义属性
-declare module 'axios' {
-  interface AxiosRequestConfig {
-    isShowLoading?: boolean // 是否显示 loading
-    isInterceptError?: boolean // 是否由全局拦截处理错误
-  }
-}
-
 /**
  * 跳转登录页
  * 清除用户认证信息，并携带当前页面路由以便登录后返回
  */
 const toLogin = () => {
   localStorage.removeItem('token')
-  const navigate = useNavigate()
-  navigate('/login')
+  const current = window.location.pathname
+  window.location.href = `/login?redirect=${encodeURIComponent(current)}`
 }
 
 /**
- * 请求失败后的错误统一处理
- * @param status 状态码
- * @param msg 错误信息
+ * 业务错误处理（后端自定义 code，HTTP 状态码为 200）
  */
-const handleError = (status: number, msg: string) => {
-  const errorMessages: { [key: number]: string } = {
+const handleBizError = (code: number, msg: string) => {
+  const bizErrorMessages: Record<number, string> = {
     4001: '登录失效，请重新登录',
     4003: '没有权限访问',
     5000: '服务器内部错误',
   }
 
-  if (errorMessages[status]) {
-    message.error(errorMessages[status] || msg)
-  } else if (status >= 3000) {
-    message.error(msg)
+  message.error(bizErrorMessages[code] || msg)
+
+  if (code === 4001) {
+    toLogin()
+  }
+}
+
+/**
+ * HTTP 状态码错误处理
+ */
+const handleHttpError = (status: number) => {
+  const httpErrorMessages: Record<number, string> = {
+    404: '请求的资源不存在',
+    405: '请求方法不被允许',
+    500: '服务器内部错误',
+    502: '网关错误',
+    503: '服务暂时不可用',
+    504: '网关超时',
   }
 
-  // 特定错误码的特殊处理
-  switch (status) {
-    case 4001:
-      toLogin()
-      break
-    default:
-      break
+  message.error(httpErrorMessages[status] ?? `请求失败 (${status})`)
+
+  if (status === 401) {
+    toLogin()
+  }
+}
+
+/** loading 最小显示时长（ms），避免快速请求导致闪烁 */
+const MIN_LOADING_DURATION = 300
+
+let activeRequests = 0
+let loadingStartTime = 0
+
+const showLoading = () => {
+  if (activeRequests === 0) {
+    loadingStartTime = Date.now()
+    useGlobalStore.getState().changeLoadingStatus(true)
+  }
+  activeRequests++
+}
+
+const hideLoading = () => {
+  activeRequests = Math.max(0, activeRequests - 1)
+  if (activeRequests === 0) {
+    const elapsed = Date.now() - loadingStartTime
+    const delay = Math.max(0, MIN_LOADING_DURATION - elapsed)
+    setTimeout(() => {
+      if (activeRequests === 0) {
+        useGlobalStore.getState().changeLoadingStatus(false)
+      }
+    }, delay)
   }
 }
 
@@ -60,10 +87,7 @@ function createAxiosInstance(
     isShowErrorMessage: true,
     isShowLoading: true,
   }
-): {
-  request: AxiosInstance['request']
-  axiosInstance: AxiosInstance
-} {
+) {
   const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
     timeout: 1000 * 30,
@@ -77,7 +101,7 @@ function createAxiosInstance(
   axiosInstance.interceptors.request.use(
     (requestConfig) => {
       if (requestConfig.isShowLoading) {
-        useGlobalStore.getState().changeLoadingStatus(true)
+        showLoading()
       }
       // 添加 token 和 account 到请求头
       const token = localStorage.getItem('token')
@@ -86,13 +110,13 @@ function createAxiosInstance(
         Object.assign(requestConfig.headers, { Authorization: token, account })
       }
 
-      const region = localStorage.getItem('region') || 'ZH'
+      const region = (localStorage.getItem('region') || 'ZH') as 'ZH' | 'EN' | 'EU'
       requestConfig.baseURL = getBaseURL(requestConfig.url, region)
 
       return requestConfig
     },
     (error) => {
-      useGlobalStore.getState().changeLoadingStatus(false)
+      hideLoading()
       return Promise.reject(error)
     }
   )
@@ -101,42 +125,42 @@ function createAxiosInstance(
   axiosInstance.interceptors.response.use(
     (response) => {
       if (response.config.isShowLoading) {
-        useGlobalStore.getState().changeLoadingStatus(false)
+        hideLoading()
       }
 
       const { data } = response
 
       if (data.code === 2000) {
-        return data
+        return data.data
       }
 
       if (!response.config.isInterceptError) {
         return Promise.reject(data)
       }
 
-      // 统一处理业务错误
-      handleError(data.code, data.msg)
+      handleBizError(data.code, data.msg)
+      return Promise.reject(data)
     },
     (error) => {
-      setTimeout(() => {
-        if (error.config.isShowLoading) {
-          useGlobalStore.getState().changeLoadingStatus(false)
-        }
-      }, 300)
-
-      if (!error.config.isShowErrorMessage) {
-        return Promise.reject(error)
+      if (error.config?.isShowLoading) {
+        hideLoading()
       }
 
-      // 统一处理 HTTP 错误
-      const message = error.response?.data?.msg || error.message || '请求发生错误'
-      message.error({ title: message, duration: 2 })
+      const status = error.response?.status
+      if (status) {
+        handleHttpError(status)
+      } else {
+        // 无响应：网络断开、跨域、请求取消等
+        message.error(error.message || '网络连接异常，请检查网络')
+      }
 
       return Promise.reject(error)
     }
   )
 
-  return { request: axiosInstance.request, axiosInstance }
+  const request = <T = unknown>(config: AxiosRequestConfig): Promise<T> => axiosInstance(config)
+
+  return { request, axiosInstance }
 }
 
 export default createAxiosInstance
