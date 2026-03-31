@@ -1,6 +1,6 @@
 import Home from '@/components/Home.tsx'
-import { lazy } from 'react'
 import ErrorPage from '@/views/ErrorPage.tsx'
+import { lazy } from 'react'
 
 const Menu = lazy(() => import('@/views/permissions/menu/Menu.tsx'))
 const ModelManage = lazy(() => import('@/views/DollsManage/ModelManage.tsx'))

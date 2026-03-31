@@ -8,7 +8,7 @@ export const clientApiMap = new Map([
   [
     'development',
     {
-      ZH: 'https://dev-intelligentcloud.robosenhub.cn',
+      ZH: 'https://test-robosenmall.robosen.cn',
       EN: 'https://dev-en-intelligentcloud.robosenhub.com',
       EU: 'https://dev-eu-intelligentcloud.robosenhub.com',
     },

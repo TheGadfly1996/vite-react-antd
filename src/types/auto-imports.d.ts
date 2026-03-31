@@ -8,6 +8,7 @@ export {}
 declare global {
   const Activity: typeof import('react').Activity
   const Button: typeof import('antd').Button
+  const Card: typeof import('antd').Card
   const Cascader: typeof import('antd')['Cascader']
   const Checkbox: typeof import('antd')['Checkbox']
   const ColorPicker: typeof import('antd')['ColorPicker']
@@ -19,7 +20,7 @@ declare global {
   const Form: typeof import('antd').Form
   const Fragment: typeof import('react').Fragment
   const Image: typeof import('antd')['Image']
-  const Input: typeof import('antd')['Input']
+  const Input: typeof import('antd').Input
   const InputNumber: typeof import('antd')['InputNumber']
   const Layout: typeof import('antd')['Layout']
   const Link: typeof import('react-router-dom')['Link']
@@ -29,18 +30,19 @@ declare global {
   const Outlet: typeof import('react-router-dom')['Outlet']
   const Pagination: typeof import('antd')['Pagination']
   const Popover: typeof import('antd').Popover
+  const Progress: typeof import('antd').Progress
   const Radio: typeof import('antd').Radio
   const Route: typeof import('react-router-dom')['Route']
   const Routes: typeof import('react-router-dom')['Routes']
-  const Select: typeof import('antd')['Select']
+  const Select: typeof import('antd').Select
   const Slider: typeof import('antd')['Slider']
-  const Space: typeof import('antd')['Space']
+  const Space: typeof import('antd').Space
   const Suspense: typeof import('react').Suspense
   const Switch: typeof import('antd')['Switch']
-  const Table: typeof import('antd')['Table']
+  const Table: typeof import('antd').Table
   const Tag: typeof import('antd')['Tag']
   const TreeSelect: typeof import('antd').TreeSelect
-  const Upload: typeof import('antd')['Upload']
+  const Upload: typeof import('antd').Upload
   const cache: typeof import('react').cache
   const cacheSignal: typeof import('react').cacheSignal
   const createContext: typeof import('react').createContext
@@ -48,6 +50,7 @@ declare global {
   const forwardRef: typeof import('react').forwardRef
   const lazy: typeof import('react').lazy
   const memo: typeof import('react').memo
+  const message: typeof import('antd').message
   const startTransition: typeof import('react').startTransition
   const theme: typeof import('antd')['theme']
   const use: typeof import('react').use
