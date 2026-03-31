@@ -18,6 +18,7 @@
     "@types/shopify-buy": "^3.0.0",
     "antd": "^6.2.0",
     "axios": "^1.13.2",
+    "dayjs": "^1.11.20",
     "framer-motion": "^12.27.5",
     "i18next": "^25.7.4",
     "i18next-browser-languagedetector": "^8.2.0",
