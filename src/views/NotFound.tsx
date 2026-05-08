@@ -22,7 +22,7 @@ export default function NotFound() {
           <p className="mx-auto max-w-xl text-base text-black leading-relaxed md:text-lg">
             您访问的页面不存在或已被移除。
             <br className="hidden md:block" />
-            请检查 URL 或返回首页继续浏览。
+            请检查 URL 或登录后继续浏览。
           </p>
         </div>
 
@@ -39,12 +39,12 @@ export default function NotFound() {
           </button>
 
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/login')}
             className="w-full cursor-pointer border-2 border-black bg-white px-8 py-4 text-black font-medium transition-colors duration-200 sm:w-auto hover:bg-black md:px-12 md:py-5 hover:text-white"
           >
             <span className="flex items-center justify-center gap-2">
               <span className="i-ant-design:arrow-left-outlined text-xl" />
-              <span className="text-sm md:text-base">返回上页</span>
+              <span className="text-sm md:text-base">重新登录</span>
             </span>
           </button>
         </div>

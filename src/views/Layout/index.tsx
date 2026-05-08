@@ -90,6 +90,9 @@ export const Layout = () => {
                   <Dropdown
                     menu={{
                       items: [{ key: 'logout', label: '退出登录' }],
+                      onClick: () => {
+                        navigate('/login')
+                      },
                     }}
                   >
                     {dom}
