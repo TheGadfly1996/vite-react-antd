@@ -41,7 +41,7 @@ export const DollSeriesApi = {
   UpdateDollSeries: (params: DollSeriesInfo) =>
     request({
       url: '/management/mini/doll/series/',
-      method: 'PUT',
+      method: 'PATCH',
       data: params,
     }),
   /**
@@ -62,7 +62,7 @@ export const DollApi = {
   /**
    * 创建玩偶
    */
-  CreateDollSeries: (params: DollInfo) =>
+  CreateDoll: (params: DollInfo) =>
     request({
       url: '/management/mini/doll/dolls/',
       method: 'POST',
@@ -85,7 +85,7 @@ export const DollApi = {
   UpdateDoll: (params: DollUpdateParams) =>
     request({
       url: '/management/mini/doll/dolls/',
-      method: 'PUT',
+      method: 'PATCH',
       data: params,
     }),
   /**
@@ -116,20 +116,6 @@ export const DollApi = {
     request({
       url: '/api/doll/characters',
       method: 'GET',
-    }),
-
-  /**
-   * 上传图片
-   * TODO: 由用户定义具体的接口地址和参数
-   */
-  uploadImage: (file: FormData) =>
-    request({
-      url: '/api/doll/upload/image',
-      method: 'POST',
-      data: file,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
     }),
 
   /**

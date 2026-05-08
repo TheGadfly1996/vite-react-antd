@@ -1,9 +1,11 @@
-import useAxios from '@/axios/request/index'
-
-const { request } = useAxios()
+import createAxiosInstance from '@/axios/request/index'
+const { request } = createAxiosInstance()
 
 export function login(data: { account: string; password: string }) {
-  return request({
+  return request<{
+    admin_token: string
+    admin_account: string
+  }>({
     url: '/account/admin/login',
     method: 'POST',
     data,

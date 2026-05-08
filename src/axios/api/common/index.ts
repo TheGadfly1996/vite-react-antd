@@ -27,3 +27,16 @@ export const refreshUploadAuth = (params: { video_oss_id: string }) =>
     method: 'POST',
     data: params,
   })
+
+export const uploadImage = (params: FormData) =>
+  request<{
+    resource_id: string
+    image_url: string
+  }>({
+    url: '/management/mini/image/upload',
+    method: 'POST',
+    data: params,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })

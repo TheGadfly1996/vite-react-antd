@@ -33,6 +33,7 @@ export interface DollParams {
   limit?: string
   page?: string
   series_id?: string
+  doll_name?: string
 }
 
 /**
@@ -113,6 +114,7 @@ export interface UploadResponse {
   success: boolean
   message: string
   data?: {
+    resource_id: string
     url: string
     filename: string
     size: number
