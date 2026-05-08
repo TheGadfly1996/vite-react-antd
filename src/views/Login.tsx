@@ -19,11 +19,11 @@ export default function Login() {
     try {
       await login(values)
       await getInfo()
-      messageApi.success('登录成功')
-
-      const from = location.state.from || '/'
+      const from = location.state?.from || '/'
       navigate(from, { replace: true })
+      messageApi.success('登录成功')
     } catch (error: unknown) {
+      console.error(error)
       messageApi.error((error as AxiosResponseType)?.msg || '登录失败，请重试')
     } finally {
       setLoading(false)

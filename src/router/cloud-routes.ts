@@ -35,7 +35,7 @@ export const menuRoutes = [
         element: 'ImageConfig',
         permissions: ['CLOUD'],
         meta: {
-          title: '图片配置',
+          title: '玩偶管理',
           icon: 'i-ant-design:picture-outlined',
         },
       },

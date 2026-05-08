@@ -1,8 +1,8 @@
+import { getUserInfo, login } from '@/axios/api/login'
+import { RSA } from '@/utils/encrypt'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import createSelectors from './selectors'
-import { login, getUserInfo } from '@/axios/api/login'
-import { RSA } from '@/utils/encrypt'
 
 interface AuthState {
   token: string
@@ -19,8 +19,16 @@ interface UserProfile {
 }
 
 interface AuthActions {
-  login: (userInfo: { username: string; password: string }) => Promise<void>
-  getInfo: () => Promise<any>
+  login: (userInfo: {
+    username: string
+    password: string
+  }) => Promise<{ admin_token: string; admin_account: string }>
+  getInfo: () => Promise<{
+    roles: string[]
+    username: string
+    roles_list: string[]
+    avatar: string
+  }>
   logout: () => void
   setToken: (token: string, account: string) => void
   setUserProfile: (profile: UserProfile) => void
@@ -65,7 +73,10 @@ export const useAuthStore = createSelectors(
 
         resetState: () => set(getDefaultState()),
 
-        login: async (userInfo: { username: string; password: string }) => {
+        login: async (userInfo: {
+          username: string
+          password: string
+        }): Promise<{ admin_token: string; admin_account: string }> => {
           const { username, password } = userInfo
 
           const response = await login({
@@ -73,18 +84,16 @@ export const useAuthStore = createSelectors(
             password: RSA(password),
           })
 
-          const { data } = response
-          const { admin_token, admin_account } = data
+          const { admin_token, admin_account } = response
           get().setToken(admin_token, admin_account)
 
-          return data
+          return response
         },
 
         // 获取用户信息
         getInfo: async () => {
           const { account } = get()
-          const response = await getUserInfo({ admin_account: account })
-          const { data } = response
+          const data = await getUserInfo({ admin_account: account })
 
           if (!data) {
             throw new Error('验证失败,请重新登录')
@@ -122,7 +131,7 @@ export const useAuthStore = createSelectors(
           avatar: state.avatar,
           roles: state.roles,
         }),
-      },
-    ),
-  ),
+      }
+    )
+  )
 )
